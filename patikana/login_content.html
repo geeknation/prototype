@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<script type="text/javascript" src="Login_page.js"></script>
+		<link rel="stylesheet" type="text/css" href="accounts.css"/>
+	</head>
+	<body>
+		<div id="report_form">
+			<div id="loading"></div>
+			<form name="form" method="post" id="announceform" action="login.php">
+				<table>
+					<tr>
+						<td align="right">Username:</td>
+						<td>
+						<input type="text" name="username" width="25" maxlength="45" id="username" />
+						</td>
+					</tr>
+					<tr>
+						<td align="right">Password:</td>
+						<td>
+						<input type="password" name="password" width="25" maxlength="45" id="password" />
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="checkbox" id="rememberme" name="remeberme">&nbsp;Remember me</td>
+					</tr>
+				</table>
+				<p/>
+				<p/>
+				<table align="center">
+					<tr id="forgotpasstext">
+						<td align="left"><a href="javascript:" class="forgot_password"><font class="accountoptions" size="1">Forgot password</font></a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class='forgot_password_dialog'></div>
+		
+	</body>
+</html>

@@ -1,0 +1,94 @@
+body {
+	background-color: #efefef;
+	background-position: initial initial;
+	background-repeat: initial initial;
+	margin-top: -5px;
+	margin-right: -2px;
+	margin-left: -2px;
+}
+#wrap {
+	background-color: #F9f9f9;
+	width: 65%;
+	margin: 0 auto;
+	margin-top: 0.5%;
+	float: none;
+	overflow: hidden;
+}
+.navbar {
+
+	background-color: #00b800;
+	background-position: initial initial;
+	background-repeat: initial initial;
+	width: 100%;
+	font-family: "Trebuchet MS";
+	text-align: center;
+	color: #ffffff;
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	-moz-box-shadow: 0 8px 6px -6px black;
+	box-shadow: 0 5px 6px -6px black;
+}
+
+.button {
+	background-color: #00b800;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#04b800), color-stop(25%, #04b800), to(#04b800));
+	background-image: -webkit-linear-gradient(#04b800, #04b800 25%, #04b800);
+	background-image: -moz-linear-gradient(top, #04b800, #04b800 25%, #04b800);
+	background-image: -ms-linear-gradient(#04b800, #04b800 25%, #04b800);
+	background-image: -o-linear-gradient(#04b800, #04b800 25%, #04b800);
+	background-image: linear-gradient(#04b800, #04b800 25%, #04b800);
+	background-repeat: no-repeat;
+	filter: progid:  DXImageTransform.Microsoft.gradient(startColorstr='#04b800', endColorstr='#04b800', GradientType=0);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	border: 1px solid #04b800;
+	border-bottom-color: #bbb;
+	padding: 4px 10px 4px;
+	color: #FFFFFF;
+	font-weight: bolder;
+	font-family: "Trebuchet MS";
+	
+}
+.btn-large {
+	width: 150px;
+	height: 40px;
+}
+.button:active {
+	background-color: #03a800;
+	background-position: 0 40px;
+	
+}
+.found_link{
+	
+}
+.btn-link {
+	border-radius:4px;
+	text-align: center;
+	
+	color:#FFFFFF;
+	text-decoration:none;
+	color:#FFFFFF;
+}
+.btn-link:hover{
+	text-decoration:none;
+	color:#FFFFFF;
+}
+.search {
+	height: 38px;
+	width: 60%;
+	font-size: 1.2em;
+	padding: 0 0 0 0;
+}
+.sidepanel{
+	border-radius: 4px;
+	background-color:#FFFFFF;
+	font-family:"Trebuchet MS";
+}
+.header{
+	font-weight: 500;
+	text-align: center;
+	font-family:"Trebuchet MS";
+}
+.dropdown-menu ul>li>a{
+		color:#000000;
+}

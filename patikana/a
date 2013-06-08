@@ -1,0 +1,3560 @@
+[33mcommit 8ad9e1e22abe658c2e1df7a0adf0fccb81859b04[m
+Author: ian mukunya <ianmukunya@gmail.com>
+Date:   Sat Jun 8 06:28:44 2013 +0300
+
+    first commit
+
+[1mdiff --git a/MODULES/ACCOUNT/Register_page.php b/MODULES/ACCOUNT/Register_page.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b2ca63e[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/Register_page.php[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32m<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">[m[41m[m
+[32m+[m[32m<html xmlns="http://www.w3.org/1999/xhtml">[m[41m[m
+[32m+[m	[32m<head>		<title> Create account||Find lost items,Register on patikana </title>		<meta name="description" content="Create an account on patikana,Become a registered finder"/>		<link rel="stylesheet" type="text/css" href="bootstrap.css">		<link rel="stylesheet" type="text/css" href="flat-ui.css">		<link rel="stylesheet" type="text/css" href="template.css">[m[41m[m
+[32m+[m		[32m<link rel="stylesheet" href="registerpage.css" type="text/css"/>[m
+[32m+[m		[32m<link rel="stylesheet" href="jquery_ptk/jquery.css" type="text/css"/>[m[41m		[m
+[32m+[m	[32m</head>[m[41m[m
+[32m+[m	[32m<body>	<?php		include "header.php";	?>[m[41m[m
+[32m+[m		[32m<div id="wrap">[m[41m			[m
+[32m+[m			[32m<div id="content">			<div class="alert alert-success"><h4>Create Account</h4></div>[m[41m[m
+[32m+[m				[32m<div class="alert-error" id="alertinfo"></div>				<form id="register_form" name="accounts" method="post" action="register.php">					<table align="center" border="0" class="table-condensed">						<tr>							<td class="fieldtitle">Names:</td>							<td>							<input type="text" name="names" id="names"/>							</td>						</tr>						<tr>							<td class="fieldtitle">Year of birth:</td>							<td>							<select name="day" size="1" style="width:50px">								<?php								for ($i = 1; $i <= 31; $i++) {									echo "<option>" . $i . "</option>";								}								?>							</select> &nbsp;&nbsp;							<select name="month" size="1" style="width:70px">								<?php								$months = array("Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");								for ($i = 0; $i < count($months); $i++) {									echo "<option>" . $months[$i] . "</option>";								}								?>							</select> &nbsp;&nbsp;							<select name="year" size="1" style="width:70px">								<?php								for ($i = 1970; $i <= date("Y", time()) - 18; $i++) {									echo "<option>" . $i . "</option>";								}								?>							</select></td>						</tr>						<tr>							<td class="fieldtitle">Gender:</td>							<td>							<select name="gender" id="gender">								<option> male </option>								<option> female </option>							</select></td>						</tr>						<tr>							<td class="fieldtitle">Location:</td>							<td>							<input type="text" name="location" id="location"/>							</td>						</tr>						<tr>							<td width="160">Username:</td>							<td>							<input type="text" name="username" maxlength="45" id="username">							</td>						</tr>						<tr>							<td>Password:</td>							<td>							<input type="password" name="password" maxlength="45" id="password">							</td>						</tr>						<tr>							<td>Confirm password:</td>							<td>							<input type="password" name="confirmpassword" maxlength="45" id="password1">							</td>						</tr>						<tr>							<td></td>							<td>Type a question to help you recover your password</td>						</tr>						<tr>							<td>Question:</td>							<td>							<select name="question" maxlength="150" id="question_id">								<option>What is the name of my dog?</option>								<option>What was the color of my first car?</option>								<option>What is my favourite meal?</option>								<option>How many languages can i speak?</option>							</select></td>						</tr>						<tr>							<td>Answer:</td>							<td>							<input type="text" name="answer" maxlength="45" id="answer_id">							</td>						</tr>						<tr>							<td>Phone No:</td>							<td>							<input type="text" value="+254" readonly="readonly" id="countrycode"  name="countrycode"/>							&nbsp;							<input type="text" name="phoneno"  maxlength="45" id="phoneno_id" >							</td>						</tr>						<tr>							<td>Email:</td>							<td>							<input type="text" name="email" maxlength="255" id="email_id">							</td>						</tr>						<tr>							<td>Agree to policy:</td>							<td>							<input type="checkbox" name="agreetopolicy" id="policystatement" checked="">							</td>						</tr>						<tr>							<td><!-- Leave this td empty --></td>							<td>							<div class="policy">								By clicking create button you agree to the terms and conditions of Patikana.							</div></td>						</tr>						<tr>							<td>							<input type="button" class="btn btn-success btn-large" id="create_account" value="Create account"/>							</td>						</tr>					</table>				</form>[m[41m[m
+[32m+[m			[32m</div>[m[41m[m
+[32m+[m		[32m</div>		<script type="text/javascript" src="jquery.js"></script>		<script type="text/javascript" src="jquery_ptk/jqueryui.js"></script>		<script type="text/javascript" src='createaccount.js'></script>		Latitude:		<input type="hidden" id="lat" value=""/>		</br>		Longitude:		<input type="hidden" id="long" value=""/>		<br />		<div id="map"></div>		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBFp0uN_kqPSRFvcJNbjZDWi64eYLwD1is&sensor=false&libraries=places"></script>		<script type="text/javascript">			var _gaq = _gaq || [];			_gaq.push(['_setAccount', 'UA-28452133-1']);			_gaq.push(['_setDomainName', 'patikana.co.ke']);			_gaq.push(['_trackPageview']);			(function() {				var ga = document.createElement('script');				ga.type = 'text/javascript';				ga.async = true;				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';				var s = document.getElementsByTagName('script')[0];				s.parentNode.insertBefore(ga, s);			})();		</script>		<script type="text/javascript">			function mapper(lat, longg) {				var map_opts = {					center : new google.maps.LatLng(lat, longg),					mapTypeId : google.maps.MapTypeId.ROADMAP,					zoom : 7				}				var map = new google.maps.Map(document.getElementById("map"), map_opts);			}			function getLocation(){				var autocomplete = new google.maps.places.Autocomplete(document.getElementById("location"));			}			getLocation();						$.ajax({				dataType : "json",				url : "geolocation.php",				cache : false,				success : function(data) {					var lat = data.lat;					var longitude = data.longg;					var city = data.city;					$("#lat").val(lat);					$("#long").val(longitude);					$("#city").val(city);					mapper(lat, longitude);				}			});		</script>		<script type="text/javascript">			$(function(){				$("#age").datepicker();			});		</script>[m[41m[m
+[32m+[m		[32m<?php		include "footer.php";		?>[m[41m[m
+[32m+[m		[32m<div id="logout_dialogbox"></div>[m[41m		[m
+[32m+[m	[32m</body>[m[41m[m
+[32m+[m[32m</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/MODULES/ACCOUNT/accinfo.php b/MODULES/ACCOUNT/accinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c403866[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/accinfo.php[m
+[36m@@ -0,0 +1,91 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32mrequire_once("api/User.php");[m
+[32m+[m[32m$u=new User();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<script type="text/javascript">[m
+[32m+[m	[32m$(document).ready(function() {[m
+[32m+[m		[32m$("input[type=text]").css('border', 'solid thin #00FF99;');[m
+[32m+[m
+[32m+[m		[32m$("#savechanges").click(function() {[m
+[32m+[m			[32mvar prefusername = $("#prefusername").val();[m
+[32m+[m			[32mvar passone = $("#prefpass").val();[m
+[32m+[m			[32mvar passtwo = $("#prefpass1").val();[m
+[32m+[m[41m			[m
+[32m+[m			[32mif(prefusername == '') {[m
+[32m+[m				[32m$('#error').addClass("alert alert-error").html("please enter a username");[m
+[32m+[m			[32m} else if(passone == '' || passtwo == '') {[m
+[32m+[m				[32m$('#error').addClass("error").html("please enter a password and confirm the password");[m
+[32m+[m			[32m} else if(passone != passtwo) {[m
+[32m+[m				[32m$('#error').addClass("error").html("please ensure the passwords are matching");[m
+[32m+[m			[32m}[m[41m [m
+[32m+[m			[32melse {[m
+[32m+[m
+[32m+[m				[32m$.post('updateinfo.php', {[m
+[32m+[m					[32mprefusername : prefusername,[m
+[32m+[m					[32mpass : passone[m
+[32m+[m				[32m}, function(data) {[m
+[32m+[m
+[32m+[m					[32mif( data = "updatesucessful") {[m
+[32m+[m
+[32m+[m						[32mif($("#error").is(":visible")) {[m
+[32m+[m							[32m$("#error").hide();[m
+[32m+[m							[32m$("#updatesucess").addClass("alert alert-success").text("changes made sucesfully");[m
+[32m+[m						[32m} else {[m
+[32m+[m							[32m$("#updatesucess").addClass("alert alert-success").text("changes made sucesfully");[m
+[32m+[m						[32m}[m
+[32m+[m
+[32m+[m					[32m}[m
+[32m+[m				[32m});[m
+[32m+[m			[32m}[m
+[32m+[m		[32m});[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m[32m</script>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32m$user = $_SESSION['user_allow'];[m
+[32m+[m		[32m$uid = $u->get_user_id($user);[m
+[32m+[m[41m		[m
+[32m+[m		[32m$query = "SELECT username FROM login WHERE user_id='" . $uid . "'";[m
+[32m+[m
+[32m+[m		[32m$result = mysql_query($query);[m
+[32m+[m
+[32m+[m		[32m$content = '';[m
+[32m+[m		[32mwhile ($row = mysql_fetch_array($result)) {[m
+[32m+[m			[32m$username = $row['username'];[m
+[32m+[m
+[32m+[m			[32m$content .= <<<EOD[m
+[32m+[m[32m<div class='info_static'>[m
+[32m+[m[32m<div id="error"></div>[m
+[32m+[m[32m<div id="updatesucess"></div>[m
+[32m+[m[32m<table align="center" height="300">[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td><b>Username:</b></td>[m
+[32m+[m[32m<td>$username</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<form method='post'>[m
+[32m+[m[32m<td><b>change your account information:</b></td>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>type to change your username:</td>[m
+[32m+[m[32m<td><input type="text" name="prefusername" id="prefusername" placeholder="$user"/></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>type to change your password:</td>[m
+[32m+[m[32m<td><input type="password" name="prefpass" id="prefpass"/></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>confirm password</td>[m
+[32m+[m[32m<td><input type="password" name="prefpass1" id="prefpass1"/></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<td><input type="button" value="Save changes" class="btn btn-success btn-large" id="savechanges"/></td>[m
+[32m+[m[32m</form>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m</table>[m
+[32m+[m[32m</div>[m
+[32m+[m[32mEOD;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m		[32mecho $content;[m
+[32m+[m		[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/MODULES/ACCOUNT/account.php b/MODULES/ACCOUNT/account.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..56620c3[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/account.php[m
+[36m@@ -0,0 +1,72 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<html>[m
+[32m+[m	[32m<head>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/jquery.js"></script>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/jqueryui.js"></script>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/bootstrap.js"></script>[m
+[32m+[m[41m		[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="bootstrap.css">[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="jquery_ptk/jquery.css">[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="flat-ui.css">[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="accounts.css"/>[m
+[32m+[m		[32m<script type="text/javascript">[m
+[32m+[m			[32mjQuery(document).ready(function() {[m
+[32m+[m
+[32m+[m				[32m$(".tab-content").load("personalinfo.php");[m
+[32m+[m				[32m$("#li_myinfo a").click(function(e) {[m
+[32m+[m					[32me.preventDefault();[m
+[32m+[m					[32m$(this).tab('show');[m
+[32m+[m					[32m$(".tab-content").load("personalinfo.php");[m
+[32m+[m
+[32m+[m				[32m});[m
+[32m+[m				[32m$("#li_accinfo a").click(function(e) {[m
+[32m+[m					[32me.preventDefault();[m
+[32m+[m					[32m$(this).tab('show');[m
+[32m+[m					[32m$(".tab-content").load("accinfo.php");[m
+[32m+[m				[32m});[m
+[32m+[m				[32m$("#li_mycollection a").click(function(e) {[m
+[32m+[m					[32me.preventDefault();[m
+[32m+[m					[32m$(this).tab('show');[m
+[32m+[m					[32m$(".tab-content").load("mycollections.php");[m
+[32m+[m				[32m});[m
+[32m+[m			[32m});[m
+[32m+[m
+[32m+[m		[32m</script>[m
+[32m+[m	[32m</head>[m
+[32m+[m	[32m<body>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32minclude "header.php";[m
+[32m+[m		[32m?>[m
+[32m+[m		[32m<div id="wrap">[m
+[32m+[m			[32m<div id="operation_check">[m
+[32m+[m				[32m<?php[m
+[32m+[m				[32mif (isset($_GET['flag'])) {[m
+[32m+[m					[32m$flag = $_GET['flag'];[m
+[32m+[m					[32mif ($flag == "update_sucess") {[m
+[32m+[m						[32mecho "<div class='update_sucess'>changes sucessful</div>";[m
+[32m+[m					[32m} else {[m
+[32m+[m						[32mecho "<div class='update_fail'>changes not sucessfull</div>";[m
+[32m+[m					[32m}[m
+[32m+[m				[32m}[m
+[32m+[m				[32m?>[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div class="tabbable tabs-left">[m
+[32m+[m				[32m<ul class="nav nav-tabs" id="sidemenulist">[m
+[32m+[m					[32m<li class="active" id="li_myinfo">[m
+[32m+[m						[32m<a href="#" id="myinfo">My Information</a>[m
+[32m+[m					[32m</li>[m
+[32m+[m					[32m<li id="li_accinfo">[m
+[32m+[m						[32m<a href="#" id="accinfo">Account Information</a>[m
+[32m+[m					[32m</li>[m
+[32m+[m					[32m<li id="li_mycollection">[m
+[32m+[m						[32m<a href="#" id="mycollection">My collection</a>[m
+[32m+[m					[32m</li>[m
+[32m+[m				[32m</ul>[m
+[32m+[m				[32m<div class="tab-content" id="content-loader"></div>[m
+[32m+[m			[32m</div>[m
+[32m+[m		[32m</div>[m
+[32m+[m		[32m<div id="logout_dialogbox"></div>[m
+[32m+[m	[32m</body>[m
+[32m+[m[32m</html>[m
+[1mdiff --git a/MODULES/ACCOUNT/accounts.css b/MODULES/ACCOUNT/accounts.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e74daea[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/accounts.css[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32m#wrap{[m
+[32m+[m	[32mwidth:65%;[m
+[32m+[m	[32mmargin:0 auto;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.accountoptions{[m
+[32m+[m	[32mcolor:#FF0000;[m
+[32m+[m	[32mmargin-right:5px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.accountoptions:hover{[m
+[32m+[m	[32mtext-decoration:underline;[m
+[32m+[m
+[32m+[m[32m}[m
+[32m+[m[32m#user_alert{[m
+[32m+[m	[32mfont-size: smaller;[m
+[32m+[m[32m}[m
+[1mdiff --git a/MODULES/ACCOUNT/createaccount.js b/MODULES/ACCOUNT/createaccount.js[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2776d1c[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/createaccount.js[m
+[36m@@ -0,0 +1,124 @@[m
+[32m+[m[32mjQuery(document).ready(function() {[m
+[32m+[m
+[32m+[m	[32mfunction isValidEmailAddress(emailAddress) {[m
+[32m+[m
+[32m+[m		[32mvar pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);[m
+[32m+[m
+[32m+[m		[32mreturn pattern.test(emailAddress);[m
+[32m+[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m
+[32m+[m	[32m$("#create_account").click(function() {[m
+[32m+[m
+[32m+[m		[32mvar names = $('#names').val();[m
+[32m+[m
+[32m+[m		[32mvar location = $('#location').val();[m
+[32m+[m
+[32m+[m		[32mvar idnumber = $('#idnumber').val();[m
+[32m+[m
+[32m+[m		[32mvar gender = $('#gender').val();[m
+[32m+[m
+[32m+[m		[32mvar code = $("#countrycode").val();[m
+[32m+[m
+[32m+[m		[32mvar phoneno = $("#phoneno_id").val();[m
+[32m+[m
+[32m+[m		[32mvar email = $('#email_id').val();[m
+[32m+[m
+[32m+[m		[32mvar question = $('#question_id').val();[m
+[32m+[m
+[32m+[m		[32mvar answer = $('#answer_id').val();[m
+[32m+[m
+[32m+[m		[32mvar username = $('#username').val();[m
+[32m+[m
+[32m+[m		[32mvar password = $('#password').val();[m
+[32m+[m
+[32m+[m		[32mvar password1 = $('#password1').val();[m
+[32m+[m
+[32m+[m		[32m//function to check null values in the fields on button click[m
+[32m+[m
+[32m+[m		[32mvar passone = document.getElementById('password').value;[m
+[32m+[m
+[32m+[m		[32mvar passtwo = document.getElementById('password1').value;[m
+[32m+[m
+[32m+[m		[32mpassone.parseInt[m
+[32m+[m		[32mpasstwo.parseInt[m
+[32m+[m		[32mif(names == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('enter your names seperated by spaces names').show().scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#names').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(location == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('enter your current location').show().scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#location').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(idnumber == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('enter your ID Number').scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#age').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(username == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('enter your preferred username').show().scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#username').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(password == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('enter your preferred password').show().scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#password').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(password1 == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('re-enter your preferred password').show().scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#password1').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(passone != passtwo) {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('password not matching').show().scrollTop();[m
+[32m+[m
+[32m+[m			[32m$('#password').addClass('bordered');[m
+[32m+[m
+[32m+[m			[32m$('#password1').addClass('bordered');[m
+[32m+[m
+[32m+[m		[32m} else if(email == '') {[m
+[32m+[m
+[32m+[m			[32m$("#alertinfo").addClass('alert alert-error').html('please enter an email adress').scrollTop();[m
+[32m+[m
+[32m+[m		[32m} else if(phoneno == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('bordered').html("please enter a phone number");[m
+[32m+[m
+[32m+[m		[32m} else if(question == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html("please enter a question to help you recover your account");[m
+[32m+[m
+[32m+[m		[32m} else if(answer == '') {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('bordered').html('please enter an answer to the question above');[m
+[32m+[m
+[32m+[m		[32m}// else if(avalilability) {[m
+[32m+[m
+[32m+[m		[32m//$('.alerterror').addClass('bordered').html('please select another username');[m
+[32m+[m
+[32m+[m		[32m//}[m
+[32m+[m
+[32m+[m		[32melse if(!isValidEmailAddress(email)) {[m
+[32m+[m
+[32m+[m			[32m$('#alertinfo').addClass('alert alert-error').html('enter a valid email adress').show();[m
+[32m+[m
+[32m+[m			[32m$('#email').addClass('bordered');[m
+[32m+[m		[32m} else {[m
+[32m+[m			[32m$("#register_form").submit();[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m[41m	[m
+[32m+[m[32m});[m
+[1mdiff --git a/MODULES/ACCOUNT/mycollections.php b/MODULES/ACCOUNT/mycollections.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..70aa927[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/mycollections.php[m
+[36m@@ -0,0 +1,50 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32m?>[m
+[32m+[m	[32m<script type="text/javascript" src="jquery_ptk/js/jquery.js"></script>[m
+[32m+[m	[32m<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>[m
+[32m+[m	[32m<script type="text/javascript">[m
+[32m+[m[32mjQuery(document).ready(function($){[m
+[32m+[m	[32m$('#collectionloader').load("collections.php?item=n");[m
+[32m+[m	[32m$("#li_n a").click(function(e){[m
+[32m+[m		[32me.preventDefault();[m
+[32m+[m		[32m$('#collectionloader').load("collections.php?item=n");[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32m$("#li_sch a").click(function(e){[m
+[32m+[m		[32me.preventDefault();[m
+[32m+[m		[32m$("#collectionloader").load("collections.php?item=sch");[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32m$("#li_atm a").click(function(e){[m
+[32m+[m		[32m$("#collectionloader").load("collections.php?item=atm");[m
+[32m+[m	[32m});[m[41m	[m
+[32m+[m
+[32m+[m	[32m$("#li_pass a").click(function(e){[m
+[32m+[m		[32me.preventDefault();[m
+[32m+[m		[32m$("#collectionloader").load("collections.php?item=pass");[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m
+[32m+[m[41m	[m
+[32m+[m
+[32m+[m[32m});[m
+[32m+[m	[32m</script>[m
+[32m+[m	[32m<style type="text/css">[m
+[32m+[m		[32m#collectionloader{[m
+[32m+[m			[32mwidth:90%;[m
+[32m+[m			[32mtext-align: center;[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m	[32m</style>[m
+[32m+[m[32m<div class="tabbable"> <!-- Only required for left/right tabs -->[m
+[32m+[m[32m  <ul class="nav nav-tabs">[m
+[32m+[m[32m    <li class="active" id="li_n"><a href="#tab1" data-toggle="tab">National IDs</a></li>[m
+[32m+[m[32m    <li id="li_sch"><a href="#tab2" data-toggle="tab">School IDs</a></li>[m
+[32m+[m[32m    <li id="li_atm"><a href="#tab3" data-toggle="tab">Atm Cards</a></li>[m
+[32m+[m[32m    <li id="li_pass"><a href="#tab4" data-toggle="tab">Passports</a></li>[m
+[32m+[m[32m  </ul>[m
+[32m+[m[32m  <div class="tab-content" id="collectionloader">[m
+[32m+[m[41m  	  [m
+[32m+[m[32m  </div>[m
+[32m+[m[32m</div>[m
+[32m+[m
+[1mdiff --git a/MODULES/ACCOUNT/personalinfo.php b/MODULES/ACCOUNT/personalinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1d90f88[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/personalinfo.php[m
+[36m@@ -0,0 +1,123 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m
+[32m+[m[32m?>[m
+[32m+[m[32m<link rel="stylesheet" type="text/css" href="bootstrap.css"/>[m
+[32m+[m[32m<script>[m
+[32m+[m			[32m$(document).ready(function() {[m
+[32m+[m				[32m$('#editpersonalinfo').click(function() {[m
+[32m+[m					[32m$("#editform").removeClass("hidden").show().scrollTop();[m
+[32m+[m				[32m});[m
+[32m+[m
+[32m+[m				[32m$("tr").attr("height", "70px");[m
+[32m+[m				[32m$("td").css("text-align", "left");[m
+[32m+[m			[32m});[m
+[32m+[m			[32m$("#savechanges").click(function() {[m
+[32m+[m
+[32m+[m				[32mvar names = $("#names").val();[m
+[32m+[m				[32mvar location = $("#location").val();[m
+[32m+[m				[32mvar age = $("#age").val();[m
+[32m+[m				[32mvar gender = $("#gender").val();[m
+[32m+[m
+[32m+[m				[32mif(names == '' || location == '' || age == '' || gender == '') {[m
+[32m+[m					[32m$("#error").addClass("error").text("no fields should be left blank");[m
+[32m+[m				[32m} else {[m
+[32m+[m					[32m$("#editform").submit();[m
+[32m+[m				[32m}[m
+[32m+[m			[32m});[m
+[32m+[m
+[32m+[m		[32m</script>[m
+[32m+[m		[32m<div class="edit_link" style="margin-top:5%; float:right;width:100%;margin-right:1%;"><a href="javascript:" id="editpersonalinfo" class="btn-success btn-large" style="float:right">Edit this information</a></div>[m
+[32m+[m		[32m<b><h2><u style="float: left">Personal information</u></h2></b>[m
+[32m+[m		[32m<p/>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32minclude 'dbconn.inc.php';[m
+[32m+[m		[32m//include "ptk_functions.php";[m
+[32m+[m		[32mrequire_once 'api/User.php';[m
+[32m+[m		[32m$u=new User();[m
+[32m+[m		[32m$user =$_SESSION['user_allow'];[m
+[32m+[m		[32m$userid = $u->get_user_id($user);[m
+[32m+[m
+[32m+[m		[32m$query = "SELECT * FROM users where user_id='" . $userid . "'";[m
+[32m+[m
+[32m+[m		[32m$result = mysql_query($query);[m
+[32m+[m
+[32m+[m		[32m$content = '';[m
+[32m+[m		[32m$age=$u->get_user_age($userid);[m
+[32m+[m		[32mecho "<div class='info_static'><table width='500' id='infotable' align='center'>";[m
+[32m+[m		[32mwhile ($row = mysql_fetch_array($result)) {[m
+[32m+[m			[32m$names = $row['names'];[m
+[32m+[m			[32m$location = $row['location'];[m
+[32m+[m			[32m$gender = $row['gender'];[m
+[32m+[m			[32m$content .= <<<EOD[m
+[32m+[m	[32m<tr height="50">[m
+[32m+[m	[32m<td><b>Names<b/></td>[m
+[32m+[m	[32m<td>$names</td>[m
+[32m+[m	[32m</tr>[m
+[32m+[m	[32m<tr height="50">[m
+[32m+[m	[32m<td><b>Location:</b></td>[m
+[32m+[m	[32m<td>$location</td>[m
+[32m+[m	[32m</tr>[m
+[32m+[m	[32m<tr height="50">[m
+[32m+[m	[32m<td><b>Age</b></td>[m
+[32m+[m	[32m<td>$age</td>[m
+[32m+[m	[32m</tr>[m
+[32m+[m	[32m<tr height="50">[m
+[32m+[m	[32m<td><b>Gender</b></td>[m
+[32m+[m	[32m<td>$gender</td>[m
+[32m+[m	[32m</tr>[m
+[32m+[m[41m	[m
+[32m+[m[32mEOD;[m
+[32m+[m		[32m}[m
+[32m+[m		[32mecho $content;[m
+[32m+[m
+[32m+[m		[32mecho "<table/></div>";[m
+[32m+[m	[32m?>[m
+[32m+[m
+[32m+[m[32m<div id="updatesucess" class="alert-success"></div>[m
+[32m+[m[32m<div id="error" class="alert-error"></div>[m
+[32m+[m
+[32m+[m[41m		[m
+[32m+[m		[32m<?php[m
+[32m+[m
+[32m+[m		[32m$userid = $u->get_user_id($user);[m
+[32m+[m		[32m$displaynames = $u->get_user_names($userid);[m
+[32m+[m		[32m$displaylocation = $u->get_user_location($userid);[m
+[32m+[m		[32m$displayage = $u->get_yob($userid);[m
+[32m+[m		[32m$displaygender = $u->get_user_gender($userid);[m
+[32m+[m
+[32m+[m[32m?>[m
+[32m+[m[32m<form method="post" action="updatepersonalinfo.php" id="editform" class="hidden">[m
+[32m+[m[32m<div id="editformdiv">[m
+[32m+[m[32m<table align="center">[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>Names:</td>[m
+[32m+[m[32m<td>[m
+[32m+[m[32m<input type="text" name="names" id="names" value="<?php echo $displaynames; ?>"/>[m
+[32m+[m[32m</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>Location:</td>[m
+[32m+[m[32m<td>[m
+[32m+[m[32m<input type="location" name="location" id="location" value="<?php echo $displaylocation ?>"/>[m
+[32m+[m[32m</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>Year Of Birth:</td>[m
+[32m+[m[32m<td>[m
+[32m+[m[32m<input type="text" name="age" id="age" value="<?php echo $displayage ?>"/>[m
+[32m+[m[32m</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>Gender:</td>[m
+[32m+[m[32m<td>[m
+[32m+[m[32mchoosen gender was:&nbsp;<b><?php $gender ?></b><p/>[m[41m [m
+[32m+[m[32m<select name="gender" id="gender">[m
+[32m+[m[32m<option>male </option>[m
+[32m+[m[32m<option>female</option>[m
+[32m+[m[32m</select></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m</table>[m
+[32m+[m[32m<input type="button" value="Save changes" class="btn-primary btn-large" id="savechanges"/>[m
+[32m+[m[32m</div>[m
+[32m+[m[32m</form>[m
+[1mdiff --git a/MODULES/ACCOUNT/register.php b/MODULES/ACCOUNT/register.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..80bb915[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/register.php[m
+[36m@@ -0,0 +1,88 @@[m
+[32m+[m[32m<?php[m
+[32m+[m
+[32m+[m[32minclude "dbconn.inc.php";[m
+[32m+[m
+[32m+[m[32minclude 'ptk_functions.php';[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$names=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['names']))));[m
+[32m+[m
+[32m+[m[32m$username=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['username']))));[m
+[32m+[m
+[32m+[m[32m$location=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['location']))));[m
+[32m+[m
+[32m+[m[32m$gender=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['gender']))));[m
+[32m+[m
+[32m+[m[32m$countrycode=$_POST["countrycode"];[m
+[32m+[m
+[32m+[m[32m$phone=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['phoneno']))));[m
+[32m+[m
+[32m+[m[32m$email=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['email']))));[m
+[32m+[m
+[32m+[m[32m$question=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['question']))));[m
+[32m+[m
+[32m+[m[32m$answer=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['answer']))));[m
+[32m+[m
+[32m+[m[32m$password=htmlspecialchars(htmlentities(mysql_escape_string(addslashes($_POST['password']))));[m
+[32m+[m
+[32m+[m[32m$yob=$_POST['day'].$_POST['month'].$_POST['year'];[m
+[32m+[m
+[32m+[m[32m$phonenumber=$countrycode.(int)$phone;[m
+[32m+[m
+[32m+[m[32m$uid=ptk_uniq_id();[m
+[32m+[m
+[32m+[m[32m$query="INSERT INTO login(user_id,username, password) VALUES('".$uid."','".$username."','".md5($password)."')";[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$query2="INSERT INTO users(user_id,names,location,yob,gender,timecreated) VALUES('".$uid."','".$names."',[m
+[32m+[m
+[32m+[m[32m'".$location."','".$yob."','".$gender."','".time()."')";[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$query3="INSERT INTO user_phoneno(user_id,phone_number) VALUES('".$uid."','".$phonenumber."')";[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$query4="INSERT INTO user_email(user_id,emailadress) VALUES('".$uid."','".$email."')";[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$query5="INSERT INTO account_recovery(user_id,choosen_question,choosen_answer) VALUES('".$uid."','".$question."','".$answer."')";[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$result=mysql_query($query)or die(mysql_error());[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$result1=mysql_query($query2) or die(mysql_error());[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$result2=mysql_query($query3) or die(mysql_error());[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$result3=mysql_query($query4) or die(mysql_error());[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m$result4=mysql_query($query5) or die(mysql_error());[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32mif($result1==true  and $result==true and $result2==true and $result3==true and $result4==true){[m
+[32m+[m	[32mheader("location: sucessregistration.php");[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32melse{[m
+[32m+[m	[32mheader("location: failregistration.php");[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/MODULES/ACCOUNT/registerpage.css b/MODULES/ACCOUNT/registerpage.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7cbb14e[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/registerpage.css[m
+[36m@@ -0,0 +1,71 @@[m
+[32m+[m[32m#wrapped{[m[41m[m
+[32m+[m	[32mwidth: 1000px;[m[41m[m
+[32m+[m	[32mbackground: #FFFFFF;[m[41m[m
+[32m+[m	[32mmargin: 0 auto;[m[41m[m
+[32m+[m	[32mheight: auto;[m[41m[m
+[32m+[m	[32mtext-align: left;[m[41m[m
+[32m+[m	[32moverflow: hidden;[m[41m[m
+[32m+[m[41m	[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m.reg_heading {[m[41m[m
+[32m+[m	[32mmargin: 0 auto;[m[41m[m
+[32m+[m	[32mtext-align: center;[m[41m[m
+[32m+[m	[32mwidth: 400px;[m[41m[m
+[32m+[m	[32mfont-weight: 600;[m[41m[m
+[32m+[m	[32mfont-size: 17px;[m[41m[m
+[32m+[m	[32moverflow: hidden;[m[41m[m
+[32m+[m	[32mbackground-color: #6f9;[m[41m[m
+[32m+[m	[32mborder: solid thin #00FF00;[m[41m[m
+[32m+[m	[32mmargin-bottom: 10px;[m[41m[m
+[32m+[m	[32mmargin-top:15px;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32mdiv#register_form_div {[m[41m[m
+[32m+[m	[32mwidth: 500px;[m[41m[m
+[32m+[m	[32mbackground-color: #39e039;[m[41m[m
+[32m+[m	[32m-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0.5)";[m[41m[m
+[32m+[m	[32mfilter: alpha(opacity=0.5);[m[41m[m
+[32m+[m	[32m-moz-opacity:0.5;[m[41m[m
+[32m+[m	[32mtext-align: center;[m[41m[m
+[32m+[m	[32mmargin: 0 auto;[m[41m[m
+[32m+[m	[32moverflow: hidden;[m[41m[m
+[32m+[m	[32mopacity: 0.5px;[m[41m[m
+[32m+[m	[32mmargin-bottom: 20px;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32mtable#register_table {[m[41m[m
+[32m+[m	[32mmargin: 0 auto;[m[41m[m
+[32m+[m	[32mwidth: 80%;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m#register_table tr {[m[41m[m
+[32m+[m	[32mheight: 40px;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m.fieldtitle {[m[41m[m
+[32m+[m	[32mfont-weight: bold;[m[41m[m
+[32m+[m	[32mtext-transform: capitalize;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m.error {[m[41m[m
+[32m+[m	[32mheight: 30px;[m[41m[m
+[32m+[m	[32mbackground-color: #FCC;[m[41m[m
+[32m+[m	[32mwidth: 400px;[m[41m[m
+[32m+[m	[32mmargin: 0 auto;[m[41m[m
+[32m+[m	[32moverflow: hidden;[m[41m[m
+[32m+[m	[32mtext-align: center;[m[41m[m
+[32m+[m	[32mfont-size: 16px;[m[41m[m
+[32m+[m	[32mfont-weight: bold;[m[41m[m
+[32m+[m	[32mborder: solid thin #F6F;[m[41m[m
+[32m+[m	[32mmargin-bottom: 15px;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m.bordered {[m[41m[m
+[32m+[m	[32mborder: #F00 solid thin;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m.alerterror{[m[41m[m
+[32m+[m	[32mmargin-top:10px;[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m#content{[m[41m[m
+[32m+[m	[32mmargin:0 auto;[m[41m[m
+[32m+[m	[32moverflow: hidden;[m[41m[m
+[32m+[m[41m[m
+[32m+[m	[32mtext-align: center;[m[41m[m
+[32m+[m	[32mwidth: auto;	margin:1%;[m[41m[m
+[32m+[m[32m}input[type="text"],input[type="select"],input[type="password"],input[type="location"]{	width:100%;}#countrycode{	width:45px;}#phoneno_id{	width:450px;}[m[41m[m
+\ No newline at end of file[m
+[1mdiff --git a/MODULES/ACCOUNT/updateinfo.php b/MODULES/ACCOUNT/updateinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f8033fc[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/updateinfo.php[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32minclude 'dbconn.inc.php';[m
+[32m+[m[32minclude 'ptk_functions.php';[m
+[32m+[m
+[32m+[m[32m$username=htmlentities(htmlspecialchars(mysql_real_escape_string(addslashes($_POST['prefusername']))));[m
+[32m+[m[32m$pass=htmlentities(htmlspecialchars(mysql_real_escape_string(addslashes($_POST['pass']))));[m
+[32m+[m
+[32m+[m[32m$user=$_SESSION['user_allow'];[m
+[32m+[m[32m$u=new User();[m
+[32m+[m[32m$uid=$u->get_user_id($user);[m
+[32m+[m
+[32m+[m[32m$query="UPDATE login SET username='".$username."',password='".md5($pass)."' WHERE user_id='".$uid."'";[m
+[32m+[m
+[32m+[m[32m$result=mysql_query($query);[m
+[32m+[m
+[32m+[m[32m$_SESSION['user_allow']=$username;[m
+[32m+[m
+[32m+[m[32mif($result)[m
+[32m+[m[32m{[m
+[32m+[m	[32mheader("Location: account.php?flag=update_sucess");[m
+[32m+[m[32m}[m
+[32m+[m[32melse{[m
+[32m+[m	[32mheader("Location: account.php?flag=updatefail");[m
+[32m+[m[32m}[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/MODULES/ACCOUNT/updatepersonalinfo.php b/MODULES/ACCOUNT/updatepersonalinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8e43617[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/ACCOUNT/updatepersonalinfo.php[m
+[36m@@ -0,0 +1,23 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32minclude 'dbconn.inc.php';[m
+[32m+[m[32minclude 'api/User.php';[m
+[32m+[m[32m$names=$_POST['names'];[m
+[32m+[m[32m$age=$_POST['yob'];[m
+[32m+[m[32m$location=$_POST['location'];[m
+[32m+[m[32m$gender=$_POST['gender'];[m
+[32m+[m
+[32m+[m[32m$user=$_SESSION['user_allow'];[m
+[32m+[m[32m$u=new User();[m
+[32m+[m[32m$uid=$u->get_user_id($user);[m
+[32m+[m[32m$query="UPDATE users SET names='".$names."',yob='".$age."',location='".$location."',gender='".$gender."' WHERE user_id='".$uid."'  ";[m
+[32m+[m[32m$result=mysql_query($query);[m
+[32m+[m[32mif($result)[m
+[32m+[m[32m{[m
+[32m+[m	[32mheader("Location: account.php?flag=update_sucess");[m
+[32m+[m[32m}[m
+[32m+[m[32melse{[m
+[32m+[m	[32mheader("Location: account.php?flag=updatefail");[m
+[32m+[m[32m}[m
+[32m+[m[32mmysql_close();[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/MODULES/GLOBALS/howitworks.php b/MODULES/GLOBALS/howitworks.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3bced87[m
+[1m--- /dev/null[m
+[1m+++ b/MODULES/GLOBALS/howitworks.php[m
+[36m@@ -0,0 +1,43 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<!DOCTYPE  HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">[m
+[32m+[m[32m<html>[m
+[32m+[m	[32m<head>[m
+[32m+[m		[32m<meta name="description" content="How It Works,How patikana Works"/>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/js/jquery.js"></script>[m
+[32m+[m		[32m<link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"/>[m
+[32m+[m		[32m<link rel="stylesheet" href="index.css" type="text/css"/>[m
+[32m+[m		[32m<style type="text/css">[m
+[32m+[m			[32m#visual_explanation{[m
+[32m+[m				[32mmargin:0 auto;[m
+[32m+[m				[32mwidth:80%;[m
+[32m+[m				[32mpadding-top:3%;[m
+[32m+[m				[32mpadding-bottom:3%;[m
+[32m+[m				[32mtext-align: center;[m
+[32m+[m			[32m}[m
+[32m+[m[41m			[m
+[32m+[m		[32m</style>[m
+[32m+[m	[32m</head>[m
+[32m+[m	[32m<body>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32minclude "header.php";[m
+[32m+[m		[32m?>[m
+[32m+[m		[32m<div id="wrap">[m
+[32m+[m			[32m<div id="visual_explanation">[m
+[32m+[m				[32m<img src="images/howitworks.jpg" alt="how patikana works"/>[m[41m	[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div id="theory">[m
+[32m+[m				[32m1)&nbsp; When you lose an item, e.g National ID,Laptop etc ,a registered user on our platform[m
+[32m+[m				[32mfinds it, uploads the location.<p/>[m
+[32m+[m				[32m2)&nbsp;You search the item on Patikana Platform to get the location of your recovered item. Remember that you have to give a unique[m[41m [m
+[32m+[m				[32mdescription of your item. e.g ID number laptop serial number.[m
+[32m+[m				[32m<p/>[m
+[32m+[m				[32m<b>Note:</b><br/>[m
+[32m+[m				[32mThe person uploading the items does not physically collect the items.[m
+[32m+[m				[32mThe location given by the platform is considered to be prone to deviations based on the user who uploaded the item.[m
+[32m+[m[41m				[m
+[32m+[m			[32m</div>[m
+[32m+[m		[32m</div>[m
+[32m+[m	[32m</body>[m
+[32m+[m[32m</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/accinfo.php b/accinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c403866[m
+[1m--- /dev/null[m
+[1m+++ b/accinfo.php[m
+[36m@@ -0,0 +1,91 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32mrequire_once("api/User.php");[m
+[32m+[m[32m$u=new User();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<script type="text/javascript">[m
+[32m+[m	[32m$(document).ready(function() {[m
+[32m+[m		[32m$("input[type=text]").css('border', 'solid thin #00FF99;');[m
+[32m+[m
+[32m+[m		[32m$("#savechanges").click(function() {[m
+[32m+[m			[32mvar prefusername = $("#prefusername").val();[m
+[32m+[m			[32mvar passone = $("#prefpass").val();[m
+[32m+[m			[32mvar passtwo = $("#prefpass1").val();[m
+[32m+[m[41m			[m
+[32m+[m			[32mif(prefusername == '') {[m
+[32m+[m				[32m$('#error').addClass("alert alert-error").html("please enter a username");[m
+[32m+[m			[32m} else if(passone == '' || passtwo == '') {[m
+[32m+[m				[32m$('#error').addClass("error").html("please enter a password and confirm the password");[m
+[32m+[m			[32m} else if(passone != passtwo) {[m
+[32m+[m				[32m$('#error').addClass("error").html("please ensure the passwords are matching");[m
+[32m+[m			[32m}[m[41m [m
+[32m+[m			[32melse {[m
+[32m+[m
+[32m+[m				[32m$.post('updateinfo.php', {[m
+[32m+[m					[32mprefusername : prefusername,[m
+[32m+[m					[32mpass : passone[m
+[32m+[m				[32m}, function(data) {[m
+[32m+[m
+[32m+[m					[32mif( data = "updatesucessful") {[m
+[32m+[m
+[32m+[m						[32mif($("#error").is(":visible")) {[m
+[32m+[m							[32m$("#error").hide();[m
+[32m+[m							[32m$("#updatesucess").addClass("alert alert-success").text("changes made sucesfully");[m
+[32m+[m						[32m} else {[m
+[32m+[m							[32m$("#updatesucess").addClass("alert alert-success").text("changes made sucesfully");[m
+[32m+[m						[32m}[m
+[32m+[m
+[32m+[m					[32m}[m
+[32m+[m				[32m});[m
+[32m+[m			[32m}[m
+[32m+[m		[32m});[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m[32m</script>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32m$user = $_SESSION['user_allow'];[m
+[32m+[m		[32m$uid = $u->get_user_id($user);[m
+[32m+[m[41m		[m
+[32m+[m		[32m$query = "SELECT username FROM login WHERE user_id='" . $uid . "'";[m
+[32m+[m
+[32m+[m		[32m$result = mysql_query($query);[m
+[32m+[m
+[32m+[m		[32m$content = '';[m
+[32m+[m		[32mwhile ($row = mysql_fetch_array($result)) {[m
+[32m+[m			[32m$username = $row['username'];[m
+[32m+[m
+[32m+[m			[32m$content .= <<<EOD[m
+[32m+[m[32m<div class='info_static'>[m
+[32m+[m[32m<div id="error"></div>[m
+[32m+[m[32m<div id="updatesucess"></div>[m
+[32m+[m[32m<table align="center" height="300">[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td><b>Username:</b></td>[m
+[32m+[m[32m<td>$username</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<form method='post'>[m
+[32m+[m[32m<td><b>change your account information:</b></td>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>type to change your username:</td>[m
+[32m+[m[32m<td><input type="text" name="prefusername" id="prefusername" placeholder="$user"/></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>type to change your password:</td>[m
+[32m+[m[32m<td><input type="password" name="prefpass" id="prefpass"/></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr>[m
+[32m+[m[32m<td>confirm password</td>[m
+[32m+[m[32m<td><input type="password" name="prefpass1" id="prefpass1"/></td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<td><input type="button" value="Save changes" class="btn btn-success btn-large" id="savechanges"/></td>[m
+[32m+[m[32m</form>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m</table>[m
+[32m+[m[32m</div>[m
+[32m+[m[32mEOD;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m		[32mecho $content;[m
+[32m+[m		[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/account.php b/account.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e7f9270[m
+[1m--- /dev/null[m
+[1m+++ b/account.php[m
+[36m@@ -0,0 +1,76 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<html>[m
+[32m+[m	[32m<head>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/jquery.js"></script>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/jqueryui.js"></script>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/bootstrap.js"></script>[m
+[32m+[m[41m		[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="bootstrap.css">[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="jquery_ptk/jquery.css">[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="flat-ui.css">[m
+[32m+[m		[32m<link rel="stylesheet" type="text/css" href="accounts.css"/>[m
+[32m+[m		[32m<script type="text/javascript">[m
+[32m+[m			[32mjQuery(document).ready(function() {[m
+[32m+[m				[32m$("ul#sidemenulist>li").click(function(){[m
+[32m+[m					[32m$("ul#sidemenulist>li").removeClass("active");[m
+[32m+[m					[32m$(this).addClass("active");[m
+[32m+[m				[32m});[m
+[32m+[m				[32m$(".tab-content").load("personalinfo.php");[m
+[32m+[m				[32m$("#li_myinfo a").click(function(e) {[m
+[32m+[m					[32me.preventDefault();[m
+[32m+[m					[32m$(".tab-content").load("personalinfo.php");[m
+[32m+[m
+[32m+[m				[32m});[m
+[32m+[m				[32m$("#li_accinfo a").click(function(e) {[m
+[32m+[m					[32me.preventDefault();[m
+[32m+[m					[32m$(".tab-content").load("accinfo.php");[m
+[32m+[m				[32m});[m
+[32m+[m				[32m$("#li_mycollection a").click(function(e) {[m
+[32m+[m					[32me.preventDefault();[m
+[32m+[m					[32m$(".tab-content").load("mycollections.php");[m
+[32m+[m				[32m});[m
+[32m+[m			[32m});[m
+[32m+[m
+[32m+[m		[32m</script>[m
+[32m+[m	[32m</head>[m
+[32m+[m	[32m<body>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32minclude "header.php";[m
+[32m+[m		[32m?>[m
+[32m+[m		[32m<div id="wrap" style="border-left:#ccc solid thin;border-right:#ccc solid thin;margin-top:-1.5%;">[m
+[32m+[m			[32m<div id="operation_check">[m
+[32m+[m				[32m<?php[m
+[32m+[m				[32mif (isset($_GET['flag'])) {[m
+[32m+[m					[32m$flag = $_GET['flag'];[m
+[32m+[m					[32mif ($flag == "update_sucess") {[m
+[32m+[m						[32mecho "<div class='alert alert-success'>changes sucessful</div>";[m
+[32m+[m					[32m} else {[m
+[32m+[m						[32mecho "<div class='alert alert-danger'>changes not sucessfull</div>";[m
+[32m+[m					[32m}[m
+[32m+[m				[32m}[m
+[32m+[m				[32m?>[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div class="tabs-left">[m
+[32m+[m				[32m<ul class="nav nav-pills nav-stacked" id="sidemenulist">[m
+[32m+[m					[32m<li class="active" id="li_myinfo">[m
+[32m+[m						[32m<a href="#" id="myinfo">My Information</a>[m
+[32m+[m					[32m</li>[m
+[32m+[m					[32m<li id="li_accinfo">[m
+[32m+[m						[32m<a href="#" id="accinfo">Account Information</a>[m
+[32m+[m					[32m</li>[m
+[32m+[m					[32m<li id="li_mycollection">[m
+[32m+[m						[32m<a href="#" id="mycollection">My collection</a>[m
+[32m+[m					[32m</li>[m
+[32m+[m					[32m</ul>[m
+[32m+[m					[32m<ul class="nav">[m
+[32m+[m						[32m<li class="divider-vertical"></li>[m
+[32m+[m					[32m</ul>[m
+[32m+[m[41m				[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div class="tab-content" id="content-loader" style="padding-top:0%;"></div>[m
+[32m+[m		[32m</div>[m
+[32m+[m		[32m<div id="logout_dialogbox"></div>[m
+[32m+[m	[32m</body>[m
+[32m+[m[32m</html>[m
+[1mdiff --git a/accounts.css b/accounts.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3815585[m
+[1m--- /dev/null[m
+[1m+++ b/accounts.css[m
+[36m@@ -0,0 +1,28 @@[m
+[32m+[m[32m#wrap{[m
+[32m+[m	[32mwidth:65%;[m
+[32m+[m	[32mmargin:0 auto;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.accountoptions{[m
+[32m+[m	[32mcolor:#FF0000;[m
+[32m+[m	[32mmargin-right:5px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.accountoptions:hover{[m
+[32m+[m	[32mtext-decoration:underline;[m
+[32m+[m
+[32m+[m[32m}[m
+[32m+[m[32m#user_alert{[m
+[32m+[m	[32mfont-size: smaller;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.tabs-left{[m
+[32m+[m	[32mwidth:20%;[m
+[32m+[m	[32mfloat: left;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m#content-loader{[m
+[32m+[m	[32mwidth:79%;[m
+[32m+[m	[32mfloat:right;[m
+[32m+[m	[32mborder-left:#ccc solid thin;[m
+[32m+[m	[32mborder-right:#ccc solid thin[m
+[32m+[m[32m}[m
+[1mdiff --git a/bootstrap.css b/bootstrap.css[m
+[1mindex dc56a61..4ab890b 100644[m
+[1m--- a/bootstrap.css[m
+[1m+++ b/bootstrap.css[m
+[36m@@ -4040,7 +4040,7 @@[m [minput[type="submit"].btn.btn-mini {[m
+ .nav-pills > .active > a,[m
+ .nav-pills > .active > a:hover {[m
+   color: #ffffff;[m
+[31m-  background-color: #0088cc;[m
+[32m+[m[32m  background-color: #00B800;[m
+ }[m
+ [m
+ .nav-stacked > li {[m
+[36m@@ -4290,6 +4290,13 @@[m [minput[type="submit"].btn.btn-mini {[m
+   *z-index: 2;[m
+   margin-bottom: 20px;[m
+   overflow: visible;[m
+[32m+[m[32m  background-image: -moz-linear-gradient(top, #00b800, #00b800);[m
+[32m+[m[32m  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00b800), to(#00b800));[m
+[32m+[m[32m  background-image: -webkit-linear-gradient(top, #00b800, #00b800);[m
+[32m+[m[32m  background-image: -o-linear-gradient(top, #00b800, #00b800);[m
+[32m+[m[32m  background-image: linear-gradient(to bottom, #00b800, #00b800);[m
+[32m+[m[32m  background-repeat: repeat-x;[m
+[32m+[m[41m  [m
+ }[m
+ [m
+ .navbar-inner {[m
+[36m@@ -5344,6 +5351,7 @@[m [minput[type="submit"].btn.btn-mini {[m
+ [m
+ .popover-content {[m
+   padding: 9px 14px;[m
+[32m+[m[41m  [m
+ }[m
+ [m
+ .popover .arrow,[m
+[1mdiff --git a/flat-ui.css b/flat-ui.css[m
+[1mindex e84e493..5611d05 100644[m
+[1m--- a/flat-ui.css[m
+[1m+++ b/flat-ui.css[m
+[36m@@ -3,7 +3,7 @@[m
+   font-family: "Flat-UI-Icons-16";[m
+   src: url("../fonts/Flat-UI-Icons-16.eot");[m
+   src: url("../fonts/Flat-UI-Icons-16.eot?#iefix") format("embedded-opentype"), url("../fonts/Flat-UI-Icons-16.woff") format("woff"), url("../fonts/Flat-UI-Icons-16.ttf") format("truetype"), url("../fonts/Flat-UI-Icons-16.svg#Flat-UI-Icons-16") format("svg");[m
+[31m-  font-weight: normal;[m
+[32m+[m[32m  font-weight: lighter;[m
+   font-style: normal; }[m
+ [m
+ /* Use the following CSS code if you want to use data attributes for inserting your icons */[m
+[36m@@ -511,7 +511,7 @@[m [mh6 {[m
+   .demo-browser {[m
+     background-image: url("../images/demo/browser-2x.png"); } }[m
+ .navbar {[m
+[31m-  font-size: 18px; }[m
+[32m+[m[32m  font-size: 14px; }[m
+   .navbar .brand {[m
+     color: #000000;[m
+     font-size: inherit;[m
+[1mdiff --git a/header.php b/header.php[m
+[1mindex 9c9db58..70c09eb 100644[m
+[1m--- a/header.php[m
+[1m+++ b/header.php[m
+[36m@@ -16,7 +16,6 @@[m [mif (isset($_SESSION['user_allow'])) {[m
+ 	});[m
+ </script>[m
+ <div class="navbar">[m
+[31m-	<div class="pivot">[m
+ 		<div class="navbar-inner" style="">[m
+ 			<ul style="margin-right:1%;margin-left:0%" class="nav">[m
+ 				<li>[m
+[36m@@ -68,5 +67,4 @@[m [mif (isset($_SESSION['user_allow'])) {[m
+ 				?>[m
+ 			</ul>[m
+ 		</div>[m
+[31m-	</div>[m
+ </div>[m
+[1mdiff --git a/howitworks.php b/howitworks.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c3829f9[m
+[1m--- /dev/null[m
+[1m+++ b/howitworks.php[m
+[36m@@ -0,0 +1,53 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<!DOCTYPE  HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">[m
+[32m+[m[32m<html>[m
+[32m+[m	[32m<head>[m
+[32m+[m		[32m<meta name="description" content="How It Works,How patikana Works"/>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/jquery.js"></script>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/jqueryui.js"></script>[m
+[32m+[m		[32m<script type="text/javascript" src="jquery_ptk/bootstrap.js"></script>[m
+[32m+[m[41m		[m
+[32m+[m		[32m<link rel="stylesheet" href="bootstrap.css" type="text/css"/>[m
+[32m+[m		[32m<style type="text/css">[m
+[32m+[m			[32m#wrap{[m
+[32m+[m				[32mwidth:65%;[m
+[32m+[m				[32mmargin:0 auto;[m
+[32m+[m				[32mborder-left:solid thin #ccc;[m
+[32m+[m				[32mborder-right:solid thin #ccc;[m
+[32m+[m				[32mmargin-top:-1.5%;[m
+[32m+[m				[32mpadding:1%;[m
+[32m+[m			[32m}[m
+[32m+[m[41m			[m
+[32m+[m			[32m#visual_explanation{[m
+[32m+[m				[32mmargin:0 auto;[m
+[32m+[m				[32mpadding-top:3%;[m
+[32m+[m				[32mpadding-bottom:3%;[m
+[32m+[m				[32mtext-align: center;[m
+[32m+[m			[32m}[m
+[32m+[m[41m			[m
+[32m+[m		[32m</style>[m
+[32m+[m	[32m</head>[m
+[32m+[m	[32m<body>[m
+[32m+[m		[32m<?php[m
+[32m+[m		[32minclude "header.php";[m
+[32m+[m		[32m?>[m
+[32m+[m		[32m<div id="wrap">[m
+[32m+[m			[32m<div id="visual_explanation">[m
+[32m+[m				[32m<img src="images/howitworks.jpg" alt="how patikana works" width="600" height="600"/>[m[41m	[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div id="theory">[m
+[32m+[m				[32m1)&nbsp; When you lose an item, e.g National ID,Laptop etc ,a registered user on our platform[m
+[32m+[m				[32mfinds it, uploads the location.<p/>[m
+[32m+[m				[32m2)&nbsp;You search the item on Patikana Platform to get the location of your recovered item. Remember that you have to give a unique[m[41m [m
+[32m+[m				[32mdescription of your item. e.g ID number laptop serial number.[m
+[32m+[m				[32m<p/>[m
+[32m+[m				[32m<b>Note:</b><br/>[m
+[32m+[m				[32mThe person uploading the items does not physically collect the items.[m
+[32m+[m				[32mThe location given by the platform is considered to be prone to deviations based on the user who uploaded the item.[m
+[32m+[m[41m				[m
+[32m+[m			[32m</div>[m
+[32m+[m		[32m</div>[m
+[32m+[m	[32m</body>[m
+[32m+[m[32m</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/itsmine.php b/itsmine.php[m
+[1mindex ca3c5d2..57a4c6c 100644[m
+[1m--- a/itsmine.php[m
+[1m+++ b/itsmine.php[m
+[36m@@ -51,10 +51,7 @@[m
+ 				echo "&nbsp;&nbsp;<b>" . $_GET['idnumber'] . "</b>&nbsp;&nbsp;";[m
+ 				?>it's actually your lost document.[m
+ 				</p>[m
+[31m-				<p>[m
+[31m-					What are the names on the lost document?[m
+[31m-					<p/>[m
+[31m-					Type in the names into the text box[m
+[32m+[m					[32mType in your names as they appear on your Document into the text box[m
+ 					below<b> seperated by spaces</b><i> (not case sensitive)</i>[m
+ 				</p>[m
+ 				<?php[m
+[1mdiff --git a/jquery_ptk/bootstrap.js b/jquery_ptk/bootstrap.js[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1e3a967[m
+[1m--- /dev/null[m
+[1m+++ b/jquery_ptk/bootstrap.js[m
+[36m@@ -0,0 +1,2038 @@[m
+[32m+[m[32m/* ===================================================[m
+[32m+[m[32m * bootstrap-transition.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#transitions[m
+[32m+[m[32m * ===================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ========================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m
+[32m+[m[32m    "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    /* CSS TRANSITION SUPPORT (http://www.modernizr.com/)[m
+[32m+[m[32m     * ======================================================= */[m
+[32m+[m
+[32m+[m[32m    $.support.transition = (function () {[m
+[32m+[m
+[32m+[m[32m      var transitionEnd = (function () {[m
+[32m+[m
+[32m+[m[32m        var el = document.createElement('bootstrap')[m
+[32m+[m[32m          , transEndEventNames = {[m
+[32m+[m[32m               'WebkitTransition' : 'webkitTransitionEnd'[m
+[32m+[m[32m            ,  'MozTransition'    : 'transitionend'[m
+[32m+[m[32m            ,  'OTransition'      : 'oTransitionEnd otransitionend'[m
+[32m+[m[32m            ,  'transition'       : 'transitionend'[m
+[32m+[m[32m            }[m
+[32m+[m[32m          , name[m
+[32m+[m
+[32m+[m[32m        for (name in transEndEventNames){[m
+[32m+[m[32m          if (el.style[name] !== undefined) {[m
+[32m+[m[32m            return transEndEventNames[name][m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m      }())[m
+[32m+[m
+[32m+[m[32m      return transitionEnd && {[m
+[32m+[m[32m        end: transitionEnd[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    })()[m
+[32m+[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* =========================================================[m
+[32m+[m[32m * bootstrap-modal.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#modals[m
+[32m+[m[32m * =========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ========================================================= */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* MODAL CLASS DEFINITION[m
+[32m+[m[32m  * ====================== */[m
+[32m+[m
+[32m+[m[32m  var Modal = function (element, options) {[m
+[32m+[m[32m    this.options = options[m
+[32m+[m[32m    this.$element = $(element)[m
+[32m+[m[32m      .delegate('[data-dismiss="modal"]', 'click.dismiss.modal', $.proxy(this.hide, this))[m
+[32m+[m[32m    this.options.remote && this.$element.find('.modal-body').load(this.options.remote)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Modal.prototype = {[m
+[32m+[m
+[32m+[m[32m      constructor: Modal[m
+[32m+[m
+[32m+[m[32m    , toggle: function () {[m
+[32m+[m[32m        return this[!this.isShown ? 'show' : 'hide']()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , show: function () {[m
+[32m+[m[32m        var that = this[m
+[32m+[m[32m          , e = $.Event('show')[m
+[32m+[m
+[32m+[m[32m        this.$element.trigger(e)[m
+[32m+[m
+[32m+[m[32m        if (this.isShown || e.isDefaultPrevented()) return[m
+[32m+[m
+[32m+[m[32m        $('body').addClass('modal-open')[m
+[32m+[m
+[32m+[m[32m        this.isShown = true[m
+[32m+[m
+[32m+[m[32m        this.escape()[m
+[32m+[m
+[32m+[m[32m        this.backdrop(function () {[m
+[32m+[m[32m          var transition = $.support.transition && that.$element.hasClass('fade')[m
+[32m+[m
+[32m+[m[32m          if (!that.$element.parent().length) {[m
+[32m+[m[32m            that.$element.appendTo(document.body) //don't move modals dom position[m
+[32m+[m[32m          }[m
+[32m+[m
+[32m+[m[32m          that.$element[m
+[32m+[m[32m            .show()[m
+[32m+[m
+[32m+[m[32m          if (transition) {[m
+[32m+[m[32m            that.$element[0].offsetWidth // force reflow[m
+[32m+[m[32m          }[m
+[32m+[m
+[32m+[m[32m          that.$element[m
+[32m+[m[32m            .addClass('in')[m
+[32m+[m[32m            .attr('aria-hidden', false)[m
+[32m+[m[32m            .focus()[m
+[32m+[m
+[32m+[m[32m          that.enforceFocus()[m
+[32m+[m
+[32m+[m[32m          transition ?[m
+[32m+[m[32m            that.$element.one($.support.transition.end, function () { that.$element.trigger('shown') }) :[m
+[32m+[m[32m            that.$element.trigger('shown')[m
+[32m+[m
+[32m+[m[32m        })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , hide: function (e) {[m
+[32m+[m[32m        e && e.preventDefault()[m
+[32m+[m
+[32m+[m[32m        var that = this[m
+[32m+[m
+[32m+[m[32m        e = $.Event('hide')[m
+[32m+[m
+[32m+[m[32m        this.$element.trigger(e)[m
+[32m+[m
+[32m+[m[32m        if (!this.isShown || e.isDefaultPrevented()) return[m
+[32m+[m
+[32m+[m[32m        this.isShown = false[m
+[32m+[m
+[32m+[m[32m        $('body').removeClass('modal-open')[m
+[32m+[m
+[32m+[m[32m        this.escape()[m
+[32m+[m
+[32m+[m[32m        $(document).off('focusin.modal')[m
+[32m+[m
+[32m+[m[32m        this.$element[m
+[32m+[m[32m          .removeClass('in')[m
+[32m+[m[32m          .attr('aria-hidden', true)[m
+[32m+[m
+[32m+[m[32m        $.support.transition && this.$element.hasClass('fade') ?[m
+[32m+[m[32m          this.hideWithTransition() :[m
+[32m+[m[32m          this.hideModal()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , enforceFocus: function () {[m
+[32m+[m[32m        var that = this[m
+[32m+[m[32m        $(document).on('focusin.modal', function (e) {[m
+[32m+[m[32m          if (that.$element[0] !== e.target && !that.$element.has(e.target).length) {[m
+[32m+[m[32m            that.$element.focus()[m
+[32m+[m[32m          }[m
+[32m+[m[32m        })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , escape: function () {[m
+[32m+[m[32m        var that = this[m
+[32m+[m[32m        if (this.isShown && this.options.keyboard) {[m
+[32m+[m[32m          this.$element.on('keyup.dismiss.modal', function ( e ) {[m
+[32m+[m[32m            e.which == 27 && that.hide()[m
+[32m+[m[32m          })[m
+[32m+[m[32m        } else if (!this.isShown) {[m
+[32m+[m[32m          this.$element.off('keyup.dismiss.modal')[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , hideWithTransition: function () {[m
+[32m+[m[32m        var that = this[m
+[32m+[m[32m          , timeout = setTimeout(function () {[m
+[32m+[m[32m              that.$element.off($.support.transition.end)[m
+[32m+[m[32m              that.hideModal()[m
+[32m+[m[32m            }, 500)[m
+[32m+[m
+[32m+[m[32m        this.$element.one($.support.transition.end, function () {[m
+[32m+[m[32m          clearTimeout(timeout)[m
+[32m+[m[32m          that.hideModal()[m
+[32m+[m[32m        })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , hideModal: function (that) {[m
+[32m+[m[32m        this.$element[m
+[32m+[m[32m          .hide()[m
+[32m+[m[32m          .trigger('hidden')[m
+[32m+[m
+[32m+[m[32m        this.backdrop()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , removeBackdrop: function () {[m
+[32m+[m[32m        this.$backdrop.remove()[m
+[32m+[m[32m        this.$backdrop = null[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , backdrop: function (callback) {[m
+[32m+[m[32m        var that = this[m
+[32m+[m[32m          , animate = this.$element.hasClass('fade') ? 'fade' : ''[m
+[32m+[m
+[32m+[m[32m        if (this.isShown && this.options.backdrop) {[m
+[32m+[m[32m          var doAnimate = $.support.transition && animate[m
+[32m+[m
+[32m+[m[32m          this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')[m
+[32m+[m[32m            .appendTo(document.body)[m
+[32m+[m
+[32m+[m[32m          if (this.options.backdrop != 'static') {[m
+[32m+[m[32m            this.$backdrop.click($.proxy(this.hide, this))[m
+[32m+[m[32m          }[m
+[32m+[m
+[32m+[m[32m          if (doAnimate) this.$backdrop[0].offsetWidth // force reflow[m
+[32m+[m
+[32m+[m[32m          this.$backdrop.addClass('in')[m
+[32m+[m
+[32m+[m[32m          doAnimate ?[m
+[32m+[m[32m            this.$backdrop.one($.support.transition.end, callback) :[m
+[32m+[m[32m            callback()[m
+[32m+[m
+[32m+[m[32m        } else if (!this.isShown && this.$backdrop) {[m
+[32m+[m[32m          this.$backdrop.removeClass('in')[m
+[32m+[m
+[32m+[m[32m          $.support.transition && this.$element.hasClass('fade')?[m
+[32m+[m[32m            this.$backdrop.one($.support.transition.end, $.proxy(this.removeBackdrop, this)) :[m
+[32m+[m[32m            this.removeBackdrop()[m
+[32m+[m
+[32m+[m[32m        } else if (callback) {[m
+[32m+[m[32m          callback()[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* MODAL PLUGIN DEFINITION[m
+[32m+[m[32m  * ======================= */[m
+[32m+[m
+[32m+[m[32m  $.fn.modal = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('modal')[m
+[32m+[m[32m        , options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option)[m
+[32m+[m[32m      if (!data) $this.data('modal', (data = new Modal(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m      else if (options.show) data.show()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.modal.defaults = {[m
+[32m+[m[32m      backdrop: true[m
+[32m+[m[32m    , keyboard: true[m
+[32m+[m[32m    , show: true[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.modal.Constructor = Modal[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* MODAL DATA-API[m
+[32m+[m[32m  * ============== */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('click.modal.data-api', '[data-toggle="modal"]', function ( e ) {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , href = $this.attr('href')[m
+[32m+[m[32m        , $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7[m
+[32m+[m[32m        , option = $target.data('modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())[m
+[32m+[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m
+[32m+[m[32m      $target[m
+[32m+[m[32m        .modal(option)[m
+[32m+[m[32m        .one('hide', function () {[m
+[32m+[m[32m          $this.focus()[m
+[32m+[m[32m        })[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ============================================================[m
+[32m+[m[32m * bootstrap-dropdown.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#dropdowns[m
+[32m+[m[32m * ============================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ============================================================ */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* DROPDOWN CLASS DEFINITION[m
+[32m+[m[32m  * ========================= */[m
+[32m+[m
+[32m+[m[32m  var toggle = '[data-toggle=dropdown]'[m
+[32m+[m[32m    , Dropdown = function (element) {[m
+[32m+[m[32m        var $el = $(element).on('click.dropdown.data-api', this.toggle)[m
+[32m+[m[32m        $('html').on('click.dropdown.data-api', function () {[m
+[32m+[m[32m          $el.parent().removeClass('open')[m
+[32m+[m[32m        })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m  Dropdown.prototype = {[m
+[32m+[m
+[32m+[m[32m    constructor: Dropdown[m
+[32m+[m
+[32m+[m[32m  , toggle: function (e) {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , $parent[m
+[32m+[m[32m        , isActive[m
+[32m+[m
+[32m+[m[32m      if ($this.is('.disabled, :disabled')) return[m
+[32m+[m
+[32m+[m[32m      $parent = getParent($this)[m
+[32m+[m
+[32m+[m[32m      isActive = $parent.hasClass('open')[m
+[32m+[m
+[32m+[m[32m      clearMenus()[m
+[32m+[m
+[32m+[m[32m      if (!isActive) {[m
+[32m+[m[32m        $parent.toggleClass('open')[m
+[32m+[m[32m        $this.focus()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      return false[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , keydown: function (e) {[m
+[32m+[m[32m      var $this[m
+[32m+[m[32m        , $items[m
+[32m+[m[32m        , $active[m
+[32m+[m[32m        , $parent[m
+[32m+[m[32m        , isActive[m
+[32m+[m[32m        , index[m
+[32m+[m
+[32m+[m[32m      if (!/(38|40|27)/.test(e.keyCode)) return[m
+[32m+[m
+[32m+[m[32m      $this = $(this)[m
+[32m+[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m[32m      e.stopPropagation()[m
+[32m+[m
+[32m+[m[32m      if ($this.is('.disabled, :disabled')) return[m
+[32m+[m
+[32m+[m[32m      $parent = getParent($this)[m
+[32m+[m
+[32m+[m[32m      isActive = $parent.hasClass('open')[m
+[32m+[m
+[32m+[m[32m      if (!isActive || (isActive && e.keyCode == 27)) return $this.click()[m
+[32m+[m
+[32m+[m[32m      $items = $('[role=menu] li:not(.divider) a', $parent)[m
+[32m+[m
+[32m+[m[32m      if (!$items.length) return[m
+[32m+[m
+[32m+[m[32m      index = $items.index($items.filter(':focus'))[m
+[32m+[m
+[32m+[m[32m      if (e.keyCode == 38 && index > 0) index--                                        // up[m
+[32m+[m[32m      if (e.keyCode == 40 && index < $items.length - 1) index++                        // down[m
+[32m+[m[32m      if (!~index) index = 0[m
+[32m+[m
+[32m+[m[32m      $items[m
+[32m+[m[32m        .eq(index)[m
+[32m+[m[32m        .focus()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  function clearMenus() {[m
+[32m+[m[32m    getParent($(toggle))[m
+[32m+[m[32m      .removeClass('open')[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  function getParent($this) {[m
+[32m+[m[32m    var selector = $this.attr('data-target')[m
+[32m+[m[32m      , $parent[m
+[32m+[m
+[32m+[m[32m    if (!selector) {[m
+[32m+[m[32m      selector = $this.attr('href')[m
+[32m+[m[32m      selector = selector && /#/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    $parent = $(selector)[m
+[32m+[m[32m    $parent.length || ($parent = $this.parent())[m
+[32m+[m
+[32m+[m[32m    return $parent[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m  /* DROPDOWN PLUGIN DEFINITION[m
+[32m+[m[32m   * ========================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.dropdown = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('dropdown')[m
+[32m+[m[32m      if (!data) $this.data('dropdown', (data = new Dropdown(this)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option].call($this)[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.dropdown.Constructor = Dropdown[m
+[32m+[m
+[32m+[m
+[32m+[m[32m  /* APPLY TO STANDARD DROPDOWN ELEMENTS[m
+[32m+[m[32m   * =================================== */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('html')[m
+[32m+[m[32m      .on('click.dropdown.data-api touchstart.dropdown.data-api', clearMenus)[m
+[32m+[m[32m    $('body')[m
+[32m+[m[32m      .on('click.dropdown touchstart.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })[m
+[32m+[m[32m      .on('click.dropdown.data-api touchstart.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)[m
+[32m+[m[32m      .on('keydown.dropdown.data-api touchstart.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* =============================================================[m
+[32m+[m[32m * bootstrap-scrollspy.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#scrollspy[m
+[32m+[m[32m * =============================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ============================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* SCROLLSPY CLASS DEFINITION[m
+[32m+[m[32m  * ========================== */[m
+[32m+[m
+[32m+[m[32m  function ScrollSpy(element, options) {[m
+[32m+[m[32m    var process = $.proxy(this.process, this)[m
+[32m+[m[32m      , $element = $(element).is('body') ? $(window) : $(element)[m
+[32m+[m[32m      , href[m
+[32m+[m[32m    this.options = $.extend({}, $.fn.scrollspy.defaults, options)[m
+[32m+[m[32m    this.$scrollElement = $element.on('scroll.scroll-spy.data-api', process)[m
+[32m+[m[32m    this.selector = (this.options.target[m
+[32m+[m[32m      || ((href = $(element).attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7[m
+[32m+[m[32m      || '') + ' .nav li > a'[m
+[32m+[m[32m    this.$body = $('body')[m
+[32m+[m[32m    this.refresh()[m
+[32m+[m[32m    this.process()[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  ScrollSpy.prototype = {[m
+[32m+[m
+[32m+[m[32m      constructor: ScrollSpy[m
+[32m+[m
+[32m+[m[32m    , refresh: function () {[m
+[32m+[m[32m        var self = this[m
+[32m+[m[32m          , $targets[m
+[32m+[m
+[32m+[m[32m        this.offsets = $([])[m
+[32m+[m[32m        this.targets = $([])[m
+[32m+[m
+[32m+[m[32m        $targets = this.$body[m
+[32m+[m[32m          .find(this.selector)[m
+[32m+[m[32m          .map(function () {[m
+[32m+[m[32m            var $el = $(this)[m
+[32m+[m[32m              , href = $el.data('target') || $el.attr('href')[m
+[32m+[m[32m              , $href = /^#\w/.test(href) && $(href)[m
+[32m+[m[32m            return ( $href[m
+[32m+[m[32m              && $href.length[m
+[32m+[m[32m              && [[ $href.position().top, href ]] ) || null[m
+[32m+[m[32m          })[m
+[32m+[m[32m          .sort(function (a, b) { return a[0] - b[0] })[m
+[32m+[m[32m          .each(function () {[m
+[32m+[m[32m            self.offsets.push(this[0])[m
+[32m+[m[32m            self.targets.push(this[1])[m
+[32m+[m[32m          })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , process: function () {[m
+[32m+[m[32m        var scrollTop = this.$scrollElement.scrollTop() + this.options.offset[m
+[32m+[m[32m          , scrollHeight = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight[m
+[32m+[m[32m          , maxScroll = scrollHeight - this.$scrollElement.height()[m
+[32m+[m[32m          , offsets = this.offsets[m
+[32m+[m[32m          , targets = this.targets[m
+[32m+[m[32m          , activeTarget = this.activeTarget[m
+[32m+[m[32m          , i[m
+[32m+[m
+[32m+[m[32m        if (scrollTop >= maxScroll) {[m
+[32m+[m[32m          return activeTarget != (i = targets.last()[0])[m
+[32m+[m[32m            && this.activate ( i )[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        for (i = offsets.length; i--;) {[m
+[32m+[m[32m          activeTarget != targets[i][m
+[32m+[m[32m            && scrollTop >= offsets[i][m
+[32m+[m[32m            && (!offsets[i + 1] || scrollTop <= offsets[i + 1])[m
+[32m+[m[32m            && this.activate( targets[i] )[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m    , activate: function (target) {[m
+[32m+[m[32m        var active[m
+[32m+[m[32m          , selector[m
+[32m+[m
+[32m+[m[32m        this.activeTarget = target[m
+[32m+[m
+[32m+[m[32m        $(this.selector)[m
+[32m+[m[32m          .parent('.active')[m
+[32m+[m[32m          .removeClass('active')[m
+[32m+[m
+[32m+[m[32m        selector = this.selector[m
+[32m+[m[32m          + '[data-target="' + target + '"],'[m
+[32m+[m[32m          + this.selector + '[href="' + target + '"]'[m
+[32m+[m
+[32m+[m[32m        active = $(selector)[m
+[32m+[m[32m          .parent('li')[m
+[32m+[m[32m          .addClass('active')[m
+[32m+[m
+[32m+[m[32m        if (active.parent('.dropdown-menu').length)  {[m
+[32m+[m[32m          active = active.closest('li.dropdown').addClass('active')[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        active.trigger('activate')[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* SCROLLSPY PLUGIN DEFINITION[m
+[32m+[m[32m  * =========================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.scrollspy = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('scrollspy')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('scrollspy', (data = new ScrollSpy(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.scrollspy.Constructor = ScrollSpy[m
+[32m+[m
+[32m+[m[32m  $.fn.scrollspy.defaults = {[m
+[32m+[m[32m    offset: 10[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* SCROLLSPY DATA-API[m
+[32m+[m[32m  * ================== */[m
+[32m+[m
+[32m+[m[32m  $(window).on('load', function () {[m
+[32m+[m[32m    $('[data-spy="scroll"]').each(function () {[m
+[32m+[m[32m      var $spy = $(this)[m
+[32m+[m[32m      $spy.scrollspy($spy.data())[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ========================================================[m
+[32m+[m[32m * bootstrap-tab.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#tabs[m
+[32m+[m[32m * ========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ======================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* TAB CLASS DEFINITION[m
+[32m+[m[32m  * ==================== */[m
+[32m+[m
+[32m+[m[32m  var Tab = function (element) {[m
+[32m+[m[32m    this.element = $(element)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Tab.prototype = {[m
+[32m+[m
+[32m+[m[32m    constructor: Tab[m
+[32m+[m
+[32m+[m[32m  , show: function () {[m
+[32m+[m[32m      var $this = this.element[m
+[32m+[m[32m        , $ul = $this.closest('ul:not(.dropdown-menu)')[m
+[32m+[m[32m        , selector = $this.attr('data-target')[m
+[32m+[m[32m        , previous[m
+[32m+[m[32m        , $target[m
+[32m+[m[32m        , e[m
+[32m+[m
+[32m+[m[32m      if (!selector) {[m
+[32m+[m[32m        selector = $this.attr('href')[m
+[32m+[m[32m        selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      if ( $this.parent('li').hasClass('active') ) return[m
+[32m+[m
+[32m+[m[32m      previous = $ul.find('.active a').last()[0][m
+[32m+[m
+[32m+[m[32m      e = $.Event('show', {[m
+[32m+[m[32m        relatedTarget: previous[m
+[32m+[m[32m      })[m
+[32m+[m
+[32m+[m[32m      $this.trigger(e)[m
+[32m+[m
+[32m+[m[32m      if (e.isDefaultPrevented()) return[m
+[32m+[m
+[32m+[m[32m      $target = $(selector)[m
+[32m+[m
+[32m+[m[32m      this.activate($this.parent('li'), $ul)[m
+[32m+[m[32m      this.activate($target, $target.parent(), function () {[m
+[32m+[m[32m        $this.trigger({[m
+[32m+[m[32m          type: 'shown'[m
+[32m+[m[32m        , relatedTarget: previous[m
+[32m+[m[32m        })[m
+[32m+[m[32m      })[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , activate: function ( element, container, callback) {[m
+[32m+[m[32m      var $active = container.find('> .active')[m
+[32m+[m[32m        , transition = callback[m
+[32m+[m[32m            && $.support.transition[m
+[32m+[m[32m            && $active.hasClass('fade')[m
+[32m+[m
+[32m+[m[32m      function next() {[m
+[32m+[m[32m        $active[m
+[32m+[m[32m          .removeClass('active')[m
+[32m+[m[32m          .find('> .dropdown-menu > .active')[m
+[32m+[m[32m          .removeClass('active')[m
+[32m+[m
+[32m+[m[32m        element.addClass('active')[m
+[32m+[m
+[32m+[m[32m        if (transition) {[m
+[32m+[m[32m          element[0].offsetWidth // reflow for transition[m
+[32m+[m[32m          element.addClass('in')[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m          element.removeClass('fade')[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if ( element.parent('.dropdown-menu') ) {[m
+[32m+[m[32m          element.closest('li.dropdown').addClass('active')[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        callback && callback()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      transition ?[m
+[32m+[m[32m        $active.one($.support.transition.end, next) :[m
+[32m+[m[32m        next()[m
+[32m+[m
+[32m+[m[32m      $active.removeClass('in')[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* TAB PLUGIN DEFINITION[m
+[32m+[m[32m  * ===================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.tab = function ( option ) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('tab')[m
+[32m+[m[32m      if (!data) $this.data('tab', (data = new Tab(this)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.tab.Constructor = Tab[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* TAB DATA-API[m
+[32m+[m[32m  * ============ */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('click.tab.data-api', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m[32m      $(this).tab('show')[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ===========================================================[m
+[32m+[m[32m * bootstrap-tooltip.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#tooltips[m
+[32m+[m[32m * Inspired by the original jQuery.tipsy by Jason Frame[m
+[32m+[m[32m * ===========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ========================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* TOOLTIP PUBLIC CLASS DEFINITION[m
+[32m+[m[32m  * =============================== */[m
+[32m+[m
+[32m+[m[32m  var Tooltip = function (element, options) {[m
+[32m+[m[32m    this.init('tooltip', element, options)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Tooltip.prototype = {[m
+[32m+[m
+[32m+[m[32m    constructor: Tooltip[m
+[32m+[m
+[32m+[m[32m  , init: function (type, element, options) {[m
+[32m+[m[32m      var eventIn[m
+[32m+[m[32m        , eventOut[m
+[32m+[m
+[32m+[m[32m      this.type = type[m
+[32m+[m[32m      this.$element = $(element)[m
+[32m+[m[32m      this.options = this.getOptions(options)[m
+[32m+[m[32m      this.enabled = true[m
+[32m+[m
+[32m+[m[32m      if (this.options.trigger == 'click') {[m
+[32m+[m[32m        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))[m
+[32m+[m[32m      } else if (this.options.trigger != 'manual') {[m
+[32m+[m[32m        eventIn = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'[m
+[32m+[m[32m        eventOut = this.options.trigger == 'hover' ? 'mouseleave' : 'blur'[m
+[32m+[m[32m        this.$element.on(eventIn + '.' + this.type, this.options.selector, $.proxy(this.enter, this))[m
+[32m+[m[32m        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      this.options.selector ?[m
+[32m+[m[32m        (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :[m
+[32m+[m[32m        this.fixTitle()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , getOptions: function (options) {[m
+[32m+[m[32m      options = $.extend({}, $.fn[this.type].defaults, options, this.$element.data())[m
+[32m+[m
+[32m+[m[32m      if (options.delay && typeof options.delay == 'number') {[m
+[32m+[m[32m        options.delay = {[m
+[32m+[m[32m          show: options.delay[m
+[32m+[m[32m        , hide: options.delay[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      return options[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , enter: function (e) {[m
+[32m+[m[32m      var self = $(e.currentTarget)[this.type](this._options).data(this.type)[m
+[32m+[m
+[32m+[m[32m      if (!self.options.delay || !self.options.delay.show) return self.show()[m
+[32m+[m
+[32m+[m[32m      clearTimeout(this.timeout)[m
+[32m+[m[32m      self.hoverState = 'in'[m
+[32m+[m[32m      this.timeout = setTimeout(function() {[m
+[32m+[m[32m        if (self.hoverState == 'in') self.show()[m
+[32m+[m[32m      }, self.options.delay.show)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , leave: function (e) {[m
+[32m+[m[32m      var self = $(e.currentTarget)[this.type](this._options).data(this.type)[m
+[32m+[m
+[32m+[m[32m      if (this.timeout) clearTimeout(this.timeout)[m
+[32m+[m[32m      if (!self.options.delay || !self.options.delay.hide) return self.hide()[m
+[32m+[m
+[32m+[m[32m      self.hoverState = 'out'[m
+[32m+[m[32m      this.timeout = setTimeout(function() {[m
+[32m+[m[32m        if (self.hoverState == 'out') self.hide()[m
+[32m+[m[32m      }, self.options.delay.hide)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , show: function () {[m
+[32m+[m[32m      var $tip[m
+[32m+[m[32m        , inside[m
+[32m+[m[32m        , pos[m
+[32m+[m[32m        , actualWidth[m
+[32m+[m[32m        , actualHeight[m
+[32m+[m[32m        , placement[m
+[32m+[m[32m        , tp[m
+[32m+[m
+[32m+[m[32m      if (this.hasContent() && this.enabled) {[m
+[32m+[m[32m        $tip = this.tip()[m
+[32m+[m[32m        this.setContent()[m
+[32m+[m
+[32m+[m[32m        if (this.options.animation) {[m
+[32m+[m[32m          $tip.addClass('fade')[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        placement = typeof this.options.placement == 'function' ?[m
+[32m+[m[32m          this.options.placement.call(this, $tip[0], this.$element[0]) :[m
+[32m+[m[32m          this.options.placement[m
+[32m+[m
+[32m+[m[32m        inside = /in/.test(placement)[m
+[32m+[m
+[32m+[m[32m        $tip[m
+[32m+[m[32m          .remove()[m
+[32m+[m[32m          .css({ top: 0, left: 0, display: 'block' })[m
+[32m+[m[32m          .appendTo(inside ? this.$element : document.body)[m
+[32m+[m
+[32m+[m[32m        pos = this.getPosition(inside)[m
+[32m+[m
+[32m+[m[32m        actualWidth = $tip[0].offsetWidth[m
+[32m+[m[32m        actualHeight = $tip[0].offsetHeight[m
+[32m+[m
+[32m+[m[32m        switch (inside ? placement.split(' ')[1] : placement) {[m
+[32m+[m[32m          case 'bottom':[m
+[32m+[m[32m            tp = {top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}[m
+[32m+[m[32m            break[m
+[32m+[m[32m          case 'top':[m
+[32m+[m[32m            tp = {top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2}[m
+[32m+[m[32m            break[m
+[32m+[m[32m          case 'left':[m
+[32m+[m[32m            tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth}[m
+[32m+[m[32m            break[m
+[32m+[m[32m          case 'right':[m
+[32m+[m[32m            tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}[m
+[32m+[m[32m            break[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $tip[m
+[32m+[m[32m          .css(tp)[m
+[32m+[m[32m          .addClass(placement)[m
+[32m+[m[32m          .addClass('in')[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , setContent: function () {[m
+[32m+[m[32m      var $tip = this.tip()[m
+[32m+[m[32m        , title = this.getTitle()[m
+[32m+[m
+[32m+[m[32m      $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)[m
+[32m+[m[32m      $tip.removeClass('fade in top bottom left right')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , hide: function () {[m
+[32m+[m[32m      var that = this[m
+[32m+[m[32m        , $tip = this.tip()[m
+[32m+[m
+[32m+[m[32m      $tip.removeClass('in')[m
+[32m+[m
+[32m+[m[32m      function removeWithAnimation() {[m
+[32m+[m[32m        var timeout = setTimeout(function () {[m
+[32m+[m[32m          $tip.off($.support.transition.end).remove()[m
+[32m+[m[32m        }, 500)[m
+[32m+[m
+[32m+[m[32m        $tip.one($.support.transition.end, function () {[m
+[32m+[m[32m          clearTimeout(timeout)[m
+[32m+[m[32m          $tip.remove()[m
+[32m+[m[32m        })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      $.support.transition && this.$tip.hasClass('fade') ?[m
+[32m+[m[32m        removeWithAnimation() :[m
+[32m+[m[32m        $tip.remove()[m
+[32m+[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , fixTitle: function () {[m
+[32m+[m[32m      var $e = this.$element[m
+[32m+[m[32m      if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {[m
+[32m+[m[32m        $e.attr('data-original-title', $e.attr('title') || '').removeAttr('title')[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , hasContent: function () {[m
+[32m+[m[32m      return this.getTitle()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , getPosition: function (inside) {[m
+[32m+[m[32m      return $.extend({}, (inside ? {top: 0, left: 0} : this.$element.offset()), {[m
+[32m+[m[32m        width: this.$element[0].offsetWidth[m
+[32m+[m[32m      , height: this.$element[0].offsetHeight[m
+[32m+[m[32m      })[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , getTitle: function () {[m
+[32m+[m[32m      var title[m
+[32m+[m[32m        , $e = this.$element[m
+[32m+[m[32m        , o = this.options[m
+[32m+[m
+[32m+[m[32m      title = $e.attr('data-original-title')[m
+[32m+[m[32m        || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)[m
+[32m+[m
+[32m+[m[32m      return title[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , tip: function () {[m
+[32m+[m[32m      return this.$tip = this.$tip || $(this.options.template)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , validate: function () {[m
+[32m+[m[32m      if (!this.$element[0].parentNode) {[m
+[32m+[m[32m        this.hide()[m
+[32m+[m[32m        this.$element = null[m
+[32m+[m[32m        this.options = null[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , enable: function () {[m
+[32m+[m[32m      this.enabled = true[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , disable: function () {[m
+[32m+[m[32m      this.enabled = false[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , toggleEnabled: function () {[m
+[32m+[m[32m      this.enabled = !this.enabled[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , toggle: function () {[m
+[32m+[m[32m      this[this.tip().hasClass('in') ? 'hide' : 'show']()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , destroy: function () {[m
+[32m+[m[32m      this.hide().$element.off('.' + this.type).removeData(this.type)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* TOOLTIP PLUGIN DEFINITION[m
+[32m+[m[32m  * ========================= */[m
+[32m+[m
+[32m+[m[32m  $.fn.tooltip = function ( option ) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('tooltip')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('tooltip', (data = new Tooltip(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.tooltip.Constructor = Tooltip[m
+[32m+[m
+[32m+[m[32m  $.fn.tooltip.defaults = {[m
+[32m+[m[32m    animation: true[m
+[32m+[m[32m  , placement: 'top'[m
+[32m+[m[32m  , selector: false[m
+[32m+[m[32m  , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'[m
+[32m+[m[32m  , trigger: 'hover'[m
+[32m+[m[32m  , title: ''[m
+[32m+[m[32m  , delay: 0[m
+[32m+[m[32m  , html: true[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m
+[32m+[m[32m/* ===========================================================[m
+[32m+[m[32m * bootstrap-popover.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#popovers[m
+[32m+[m[32m * ===========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * =========================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* POPOVER PUBLIC CLASS DEFINITION[m
+[32m+[m[32m  * =============================== */[m
+[32m+[m
+[32m+[m[32m  var Popover = function (element, options) {[m
+[32m+[m[32m    this.init('popover', element, options)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m  /* NOTE: POPOVER EXTENDS BOOTSTRAP-TOOLTIP.js[m
+[32m+[m[32m     ========================================== */[m
+[32m+[m
+[32m+[m[32m  Popover.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype, {[m
+[32m+[m
+[32m+[m[32m    constructor: Popover[m
+[32m+[m
+[32m+[m[32m  , setContent: function () {[m
+[32m+[m[32m      var $tip = this.tip()[m
+[32m+[m[32m        , title = this.getTitle()[m
+[32m+[m[32m        , content = this.getContent()[m
+[32m+[m
+[32m+[m[32m      $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title)[m
+[32m+[m[32m      $tip.find('.popover-content > *')[this.options.html ? 'html' : 'text'](content)[m
+[32m+[m
+[32m+[m[32m      $tip.removeClass('fade top bottom left right in')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , hasContent: function () {[m
+[32m+[m[32m      return this.getTitle() || this.getContent()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , getContent: function () {[m
+[32m+[m[32m      var content[m
+[32m+[m[32m        , $e = this.$element[m
+[32m+[m[32m        , o = this.options[m
+[32m+[m
+[32m+[m[32m      content = $e.attr('data-content')[m
+[32m+[m[32m        || (typeof o.content == 'function' ? o.content.call($e[0]) :  o.content)[m
+[32m+[m
+[32m+[m[32m      return content[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , tip: function () {[m
+[32m+[m[32m      if (!this.$tip) {[m
+[32m+[m[32m        this.$tip = $(this.options.template)[m
+[32m+[m[32m      }[m
+[32m+[m[32m      return this.$tip[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , destroy: function () {[m
+[32m+[m[32m      this.hide().$element.off('.' + this.type).removeData(this.type)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* POPOVER PLUGIN DEFINITION[m
+[32m+[m[32m  * ======================= */[m
+[32m+[m
+[32m+[m[32m  $.fn.popover = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('popover')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('popover', (data = new Popover(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.popover.Constructor = Popover[m
+[32m+[m
+[32m+[m[32m  $.fn.popover.defaults = $.extend({} , $.fn.tooltip.defaults, {[m
+[32m+[m[32m    placement: 'right'[m
+[32m+[m[32m  , trigger: 'click'[m
+[32m+[m[32m  , content: ''[m
+[32m+[m[32m  , template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ==========================================================[m
+[32m+[m[32m * bootstrap-affix.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#affix[m
+[32m+[m[32m * ==========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ========================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* AFFIX CLASS DEFINITION[m
+[32m+[m[32m  * ====================== */[m
+[32m+[m
+[32m+[m[32m  var Affix = function (element, options) {[m
+[32m+[m[32m    this.options = $.extend({}, $.fn.affix.defaults, options)[m
+[32m+[m[32m    this.$window = $(window).on('scroll.affix.data-api', $.proxy(this.checkPosition, this))[m
+[32m+[m[32m    this.$element = $(element)[m
+[32m+[m[32m    this.checkPosition()[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Affix.prototype.checkPosition = function () {[m
+[32m+[m[32m    if (!this.$element.is(':visible')) return[m
+[32m+[m
+[32m+[m[32m    var scrollHeight = $(document).height()[m
+[32m+[m[32m      , scrollTop = this.$window.scrollTop()[m
+[32m+[m[32m      , position = this.$element.offset()[m
+[32m+[m[32m      , offset = this.options.offset[m
+[32m+[m[32m      , offsetBottom = offset.bottom[m
+[32m+[m[32m      , offsetTop = offset.top[m
+[32m+[m[32m      , reset = 'affix affix-top affix-bottom'[m
+[32m+[m[32m      , affix[m
+[32m+[m
+[32m+[m[32m    if (typeof offset != 'object') offsetBottom = offsetTop = offset[m
+[32m+[m[32m    if (typeof offsetTop == 'function') offsetTop = offset.top()[m
+[32m+[m[32m    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom()[m
+[32m+[m
+[32m+[m[32m    affix = this.unpin != null && (scrollTop + this.unpin <= position.top) ?[m
+[32m+[m[32m      false    : offsetBottom != null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ?[m
+[32m+[m[32m      'bottom' : offsetTop != null && scrollTop <= offsetTop ?[m
+[32m+[m[32m      'top'    : false[m
+[32m+[m
+[32m+[m[32m    if (this.affixed === affix) return[m
+[32m+[m
+[32m+[m[32m    this.affixed = affix[m
+[32m+[m[32m    this.unpin = affix == 'bottom' ? position.top - scrollTop : null[m
+[32m+[m
+[32m+[m[32m    this.$element.removeClass(reset).addClass('affix' + (affix ? '-' + affix : ''))[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* AFFIX PLUGIN DEFINITION[m
+[32m+[m[32m  * ======================= */[m
+[32m+[m
+[32m+[m[32m  $.fn.affix = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('affix')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('affix', (data = new Affix(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.affix.Constructor = Affix[m
+[32m+[m
+[32m+[m[32m  $.fn.affix.defaults = {[m
+[32m+[m[32m    offset: 0[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* AFFIX DATA-API[m
+[32m+[m[32m  * ============== */[m
+[32m+[m
+[32m+[m[32m  $(window).on('load', function () {[m
+[32m+[m[32m    $('[data-spy="affix"]').each(function () {[m
+[32m+[m[32m      var $spy = $(this)[m
+[32m+[m[32m        , data = $spy.data()[m
+[32m+[m
+[32m+[m[32m      data.offset = data.offset || {}[m
+[32m+[m
+[32m+[m[32m      data.offsetBottom && (data.offset.bottom = data.offsetBottom)[m
+[32m+[m[32m      data.offsetTop && (data.offset.top = data.offsetTop)[m
+[32m+[m
+[32m+[m[32m      $spy.affix(data)[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ==========================================================[m
+[32m+[m[32m * bootstrap-alert.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#alerts[m
+[32m+[m[32m * ==========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ========================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* ALERT CLASS DEFINITION[m
+[32m+[m[32m  * ====================== */[m
+[32m+[m
+[32m+[m[32m  var dismiss = '[data-dismiss="alert"]'[m
+[32m+[m[32m    , Alert = function (el) {[m
+[32m+[m[32m        $(el).on('click', dismiss, this.close)[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m  Alert.prototype.close = function (e) {[m
+[32m+[m[32m    var $this = $(this)[m
+[32m+[m[32m      , selector = $this.attr('data-target')[m
+[32m+[m[32m      , $parent[m
+[32m+[m
+[32m+[m[32m    if (!selector) {[m
+[32m+[m[32m      selector = $this.attr('href')[m
+[32m+[m[32m      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    $parent = $(selector)[m
+[32m+[m
+[32m+[m[32m    e && e.preventDefault()[m
+[32m+[m
+[32m+[m[32m    $parent.length || ($parent = $this.hasClass('alert') ? $this : $this.parent())[m
+[32m+[m
+[32m+[m[32m    $parent.trigger(e = $.Event('close'))[m
+[32m+[m
+[32m+[m[32m    if (e.isDefaultPrevented()) return[m
+[32m+[m
+[32m+[m[32m    $parent.removeClass('in')[m
+[32m+[m
+[32m+[m[32m    function removeElement() {[m
+[32m+[m[32m      $parent[m
+[32m+[m[32m        .trigger('closed')[m
+[32m+[m[32m        .remove()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    $.support.transition && $parent.hasClass('fade') ?[m
+[32m+[m[32m      $parent.on($.support.transition.end, removeElement) :[m
+[32m+[m[32m      removeElement()[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* ALERT PLUGIN DEFINITION[m
+[32m+[m[32m  * ======================= */[m
+[32m+[m
+[32m+[m[32m  $.fn.alert = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('alert')[m
+[32m+[m[32m      if (!data) $this.data('alert', (data = new Alert(this)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option].call($this)[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.alert.Constructor = Alert[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* ALERT DATA-API[m
+[32m+[m[32m  * ============== */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('click.alert.data-api', dismiss, Alert.prototype.close)[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ============================================================[m
+[32m+[m[32m * bootstrap-button.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#buttons[m
+[32m+[m[32m * ============================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ============================================================ */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* BUTTON PUBLIC CLASS DEFINITION[m
+[32m+[m[32m  * ============================== */[m
+[32m+[m
+[32m+[m[32m  var Button = function (element, options) {[m
+[32m+[m[32m    this.$element = $(element)[m
+[32m+[m[32m    this.options = $.extend({}, $.fn.button.defaults, options)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Button.prototype.setState = function (state) {[m
+[32m+[m[32m    var d = 'disabled'[m
+[32m+[m[32m      , $el = this.$element[m
+[32m+[m[32m      , data = $el.data()[m
+[32m+[m[32m      , val = $el.is('input') ? 'val' : 'html'[m
+[32m+[m
+[32m+[m[32m    state = state + 'Text'[m
+[32m+[m[32m    data.resetText || $el.data('resetText', $el[val]())[m
+[32m+[m
+[32m+[m[32m    $el[val](data[state] || this.options[state])[m
+[32m+[m
+[32m+[m[32m    // push to event loop to allow forms to submit[m
+[32m+[m[32m    setTimeout(function () {[m
+[32m+[m[32m      state == 'loadingText' ?[m
+[32m+[m[32m        $el.addClass(d).attr(d, d) :[m
+[32m+[m[32m        $el.removeClass(d).removeAttr(d)[m
+[32m+[m[32m    }, 0)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Button.prototype.toggle = function () {[m
+[32m+[m[32m    var $parent = this.$element.closest('[data-toggle="buttons-radio"]')[m
+[32m+[m
+[32m+[m[32m    $parent && $parent[m
+[32m+[m[32m      .find('.active')[m
+[32m+[m[32m      .removeClass('active')[m
+[32m+[m
+[32m+[m[32m    this.$element.toggleClass('active')[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* BUTTON PLUGIN DEFINITION[m
+[32m+[m[32m  * ======================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.button = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('button')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('button', (data = new Button(this, options)))[m
+[32m+[m[32m      if (option == 'toggle') data.toggle()[m
+[32m+[m[32m      else if (option) data.setState(option)[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.button.defaults = {[m
+[32m+[m[32m    loadingText: 'loading...'[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.button.Constructor = Button[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* BUTTON DATA-API[m
+[32m+[m[32m  * =============== */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('click.button.data-api', '[data-toggle^=button]', function ( e ) {[m
+[32m+[m[32m      var $btn = $(e.target)[m
+[32m+[m[32m      if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')[m
+[32m+[m[32m      $btn.button('toggle')[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* =============================================================[m
+[32m+[m[32m * bootstrap-collapse.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#collapse[m
+[32m+[m[32m * =============================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ============================================================ */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* COLLAPSE PUBLIC CLASS DEFINITION[m
+[32m+[m[32m  * ================================ */[m
+[32m+[m
+[32m+[m[32m  var Collapse = function (element, options) {[m
+[32m+[m[32m    this.$element = $(element)[m
+[32m+[m[32m    this.options = $.extend({}, $.fn.collapse.defaults, options)[m
+[32m+[m
+[32m+[m[32m    if (this.options.parent) {[m
+[32m+[m[32m      this.$parent = $(this.options.parent)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    this.options.toggle && this.toggle()[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Collapse.prototype = {[m
+[32m+[m
+[32m+[m[32m    constructor: Collapse[m
+[32m+[m
+[32m+[m[32m  , dimension: function () {[m
+[32m+[m[32m      var hasWidth = this.$element.hasClass('width')[m
+[32m+[m[32m      return hasWidth ? 'width' : 'height'[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , show: function () {[m
+[32m+[m[32m      var dimension[m
+[32m+[m[32m        , scroll[m
+[32m+[m[32m        , actives[m
+[32m+[m[32m        , hasData[m
+[32m+[m
+[32m+[m[32m      if (this.transitioning) return[m
+[32m+[m
+[32m+[m[32m      dimension = this.dimension()[m
+[32m+[m[32m      scroll = $.camelCase(['scroll', dimension].join('-'))[m
+[32m+[m[32m      actives = this.$parent && this.$parent.find('> .accordion-group > .in')[m
+[32m+[m
+[32m+[m[32m      if (actives && actives.length) {[m
+[32m+[m[32m        hasData = actives.data('collapse')[m
+[32m+[m[32m        if (hasData && hasData.transitioning) return[m
+[32m+[m[32m        actives.collapse('hide')[m
+[32m+[m[32m        hasData || actives.data('collapse', null)[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      this.$element[dimension](0)[m
+[32m+[m[32m      this.transition('addClass', $.Event('show'), 'shown')[m
+[32m+[m[32m      $.support.transition && this.$element[dimension](this.$element[0][scroll])[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , hide: function () {[m
+[32m+[m[32m      var dimension[m
+[32m+[m[32m      if (this.transitioning) return[m
+[32m+[m[32m      dimension = this.dimension()[m
+[32m+[m[32m      this.reset(this.$element[dimension]())[m
+[32m+[m[32m      this.transition('removeClass', $.Event('hide'), 'hidden')[m
+[32m+[m[32m      this.$element[dimension](0)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , reset: function (size) {[m
+[32m+[m[32m      var dimension = this.dimension()[m
+[32m+[m
+[32m+[m[32m      this.$element[m
+[32m+[m[32m        .removeClass('collapse')[m
+[32m+[m[32m        [dimension](size || 'auto')[m
+[32m+[m[32m        [0].offsetWidth[m
+[32m+[m
+[32m+[m[32m      this.$element[size !== null ? 'addClass' : 'removeClass']('collapse')[m
+[32m+[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , transition: function (method, startEvent, completeEvent) {[m
+[32m+[m[32m      var that = this[m
+[32m+[m[32m        , complete = function () {[m
+[32m+[m[32m            if (startEvent.type == 'show') that.reset()[m
+[32m+[m[32m            that.transitioning = 0[m
+[32m+[m[32m            that.$element.trigger(completeEvent)[m
+[32m+[m[32m          }[m
+[32m+[m
+[32m+[m[32m      this.$element.trigger(startEvent)[m
+[32m+[m
+[32m+[m[32m      if (startEvent.isDefaultPrevented()) return[m
+[32m+[m
+[32m+[m[32m      this.transitioning = 1[m
+[32m+[m
+[32m+[m[32m      this.$element[method]('in')[m
+[32m+[m
+[32m+[m[32m      $.support.transition && this.$element.hasClass('collapse') ?[m
+[32m+[m[32m        this.$element.one($.support.transition.end, complete) :[m
+[32m+[m[32m        complete()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , toggle: function () {[m
+[32m+[m[32m      this[this.$element.hasClass('in') ? 'hide' : 'show']()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* COLLAPSIBLE PLUGIN DEFINITION[m
+[32m+[m[32m  * ============================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.collapse = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('collapse')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('collapse', (data = new Collapse(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.collapse.defaults = {[m
+[32m+[m[32m    toggle: true[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.collapse.Constructor = Collapse[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* COLLAPSIBLE DATA-API[m
+[32m+[m[32m  * ==================== */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('click.collapse.data-api', '[data-toggle=collapse]', function (e) {[m
+[32m+[m[32m      var $this = $(this), href[m
+[32m+[m[32m        , target = $this.attr('data-target')[m
+[32m+[m[32m          || e.preventDefault()[m
+[32m+[m[32m          || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') //strip for ie7[m
+[32m+[m[32m        , option = $(target).data('collapse') ? 'toggle' : $this.data()[m
+[32m+[m[32m      $this[$(target).hasClass('in') ? 'addClass' : 'removeClass']('collapsed')[m
+[32m+[m[32m      $(target).collapse(option)[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* ==========================================================[m
+[32m+[m[32m * bootstrap-carousel.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#carousel[m
+[32m+[m[32m * ==========================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ========================================================== */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function ($) {[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* CAROUSEL CLASS DEFINITION[m
+[32m+[m[32m  * ========================= */[m
+[32m+[m
+[32m+[m[32m  var Carousel = function (element, options) {[m
+[32m+[m[32m    this.$element = $(element)[m
+[32m+[m[32m    this.options = options[m
+[32m+[m[32m    this.options.slide && this.slide(this.options.slide)[m
+[32m+[m[32m    this.options.pause == 'hover' && this.$element[m
+[32m+[m[32m      .on('mouseenter', $.proxy(this.pause, this))[m
+[32m+[m[32m      .on('mouseleave', $.proxy(this.cycle, this))[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Carousel.prototype = {[m
+[32m+[m
+[32m+[m[32m    cycle: function (e) {[m
+[32m+[m[32m      if (!e) this.paused = false[m
+[32m+[m[32m      this.options.interval[m
+[32m+[m[32m        && !this.paused[m
+[32m+[m[32m        && (this.interval = setInterval($.proxy(this.next, this), this.options.interval))[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , to: function (pos) {[m
+[32m+[m[32m      var $active = this.$element.find('.item.active')[m
+[32m+[m[32m        , children = $active.parent().children()[m
+[32m+[m[32m        , activePos = children.index($active)[m
+[32m+[m[32m        , that = this[m
+[32m+[m
+[32m+[m[32m      if (pos > (children.length - 1) || pos < 0) return[m
+[32m+[m
+[32m+[m[32m      if (this.sliding) {[m
+[32m+[m[32m        return this.$element.one('slid', function () {[m
+[32m+[m[32m          that.to(pos)[m
+[32m+[m[32m        })[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      if (activePos == pos) {[m
+[32m+[m[32m        return this.pause().cycle()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      return this.slide(pos > activePos ? 'next' : 'prev', $(children[pos]))[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , pause: function (e) {[m
+[32m+[m[32m      if (!e) this.paused = true[m
+[32m+[m[32m      if (this.$element.find('.next, .prev').length && $.support.transition.end) {[m
+[32m+[m[32m        this.$element.trigger($.support.transition.end)[m
+[32m+[m[32m        this.cycle()[m
+[32m+[m[32m      }[m
+[32m+[m[32m      clearInterval(this.interval)[m
+[32m+[m[32m      this.interval = null[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , next: function () {[m
+[32m+[m[32m      if (this.sliding) return[m
+[32m+[m[32m      return this.slide('next')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , prev: function () {[m
+[32m+[m[32m      if (this.sliding) return[m
+[32m+[m[32m      return this.slide('prev')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , slide: function (type, next) {[m
+[32m+[m[32m      var $active = this.$element.find('.item.active')[m
+[32m+[m[32m        , $next = next || $active[type]()[m
+[32m+[m[32m        , isCycling = this.interval[m
+[32m+[m[32m        , direction = type == 'next' ? 'left' : 'right'[m
+[32m+[m[32m        , fallback  = type == 'next' ? 'first' : 'last'[m
+[32m+[m[32m        , that = this[m
+[32m+[m[32m        , e = $.Event('slide', {[m
+[32m+[m[32m            relatedTarget: $next[0][m
+[32m+[m[32m          })[m
+[32m+[m
+[32m+[m[32m      this.sliding = true[m
+[32m+[m
+[32m+[m[32m      isCycling && this.pause()[m
+[32m+[m
+[32m+[m[32m      $next = $next.length ? $next : this.$element.find('.item')[fallback]()[m
+[32m+[m
+[32m+[m[32m      if ($next.hasClass('active')) return[m
+[32m+[m
+[32m+[m[32m      if ($.support.transition && this.$element.hasClass('slide')) {[m
+[32m+[m[32m        this.$element.trigger(e)[m
+[32m+[m[32m        if (e.isDefaultPrevented()) return[m
+[32m+[m[32m        $next.addClass(type)[m
+[32m+[m[32m        $next[0].offsetWidth // force reflow[m
+[32m+[m[32m        $active.addClass(direction)[m
+[32m+[m[32m        $next.addClass(direction)[m
+[32m+[m[32m        this.$element.one($.support.transition.end, function () {[m
+[32m+[m[32m          $next.removeClass([type, direction].join(' ')).addClass('active')[m
+[32m+[m[32m          $active.removeClass(['active', direction].join(' '))[m
+[32m+[m[32m          that.sliding = false[m
+[32m+[m[32m          setTimeout(function () { that.$element.trigger('slid') }, 0)[m
+[32m+[m[32m        })[m
+[32m+[m[32m      } else {[m
+[32m+[m[32m        this.$element.trigger(e)[m
+[32m+[m[32m        if (e.isDefaultPrevented()) return[m
+[32m+[m[32m        $active.removeClass('active')[m
+[32m+[m[32m        $next.addClass('active')[m
+[32m+[m[32m        this.sliding = false[m
+[32m+[m[32m        this.$element.trigger('slid')[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      isCycling && this.cycle()[m
+[32m+[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* CAROUSEL PLUGIN DEFINITION[m
+[32m+[m[32m  * ========================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.carousel = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('carousel')[m
+[32m+[m[32m        , options = $.extend({}, $.fn.carousel.defaults, typeof option == 'object' && option)[m
+[32m+[m[32m        , action = typeof option == 'string' ? option : options.slide[m
+[32m+[m[32m      if (!data) $this.data('carousel', (data = new Carousel(this, options)))[m
+[32m+[m[32m      if (typeof option == 'number') data.to(option)[m
+[32m+[m[32m      else if (action) data[action]()[m
+[32m+[m[32m      else if (options.interval) data.cycle()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.carousel.defaults = {[m
+[32m+[m[32m    interval: 5000[m
+[32m+[m[32m  , pause: 'hover'[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.carousel.Constructor = Carousel[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* CAROUSEL DATA-API[m
+[32m+[m[32m  * ================= */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('click.carousel.data-api', '[data-slide]', function ( e ) {[m
+[32m+[m[32m      var $this = $(this), href[m
+[32m+[m[32m        , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7[m
+[32m+[m[32m        , options = !$target.data('modal') && $.extend({}, $target.data(), $this.data())[m
+[32m+[m[32m      $target.carousel(options)[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[32m+[m[32m/* =============================================================[m
+[32m+[m[32m * bootstrap-typeahead.js v2.1.1[m
+[32m+[m[32m * http://twitter.github.com/bootstrap/javascript.html#typeahead[m
+[32m+[m[32m * =============================================================[m
+[32m+[m[32m * Copyright 2012 Twitter, Inc.[m
+[32m+[m[32m *[m
+[32m+[m[32m * Licensed under the Apache License, Version 2.0 (the "License");[m
+[32m+[m[32m * you may not use this file except in compliance with the License.[m
+[32m+[m[32m * You may obtain a copy of the License at[m
+[32m+[m[32m *[m
+[32m+[m[32m * http://www.apache.org/licenses/LICENSE-2.0[m
+[32m+[m[32m *[m
+[32m+[m[32m * Unless required by applicable law or agreed to in writing, software[m
+[32m+[m[32m * distributed under the License is distributed on an "AS IS" BASIS,[m
+[32m+[m[32m * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[32m+[m[32m * See the License for the specific language governing permissions and[m
+[32m+[m[32m * limitations under the License.[m
+[32m+[m[32m * ============================================================ */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m!function($){[m
+[32m+[m
+[32m+[m[32m  "use strict"; // jshint ;_;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /* TYPEAHEAD PUBLIC CLASS DEFINITION[m
+[32m+[m[32m  * ================================= */[m
+[32m+[m
+[32m+[m[32m  var Typeahead = function (element, options) {[m
+[32m+[m[32m    this.$element = $(element)[m
+[32m+[m[32m    this.options = $.extend({}, $.fn.typeahead.defaults, options)[m
+[32m+[m[32m    this.matcher = this.options.matcher || this.matcher[m
+[32m+[m[32m    this.sorter = this.options.sorter || this.sorter[m
+[32m+[m[32m    this.highlighter = this.options.highlighter || this.highlighter[m
+[32m+[m[32m    this.updater = this.options.updater || this.updater[m
+[32m+[m[32m    this.$menu = $(this.options.menu).appendTo('body')[m
+[32m+[m[32m    this.source = this.options.source[m
+[32m+[m[32m    this.shown = false[m
+[32m+[m[32m    this.listen()[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  Typeahead.prototype = {[m
+[32m+[m
+[32m+[m[32m    constructor: Typeahead[m
+[32m+[m
+[32m+[m[32m  , select: function () {[m
+[32m+[m[32m      var val = this.$menu.find('.active').attr('data-value')[m
+[32m+[m[32m      this.$element[m
+[32m+[m[32m        .val(this.updater(val))[m
+[32m+[m[32m        .change()[m
+[32m+[m[32m      return this.hide()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , updater: function (item) {[m
+[32m+[m[32m      return item[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , show: function () {[m
+[32m+[m[32m      var pos = $.extend({}, this.$element.offset(), {[m
+[32m+[m[32m        height: this.$element[0].offsetHeight[m
+[32m+[m[32m      })[m
+[32m+[m
+[32m+[m[32m      this.$menu.css({[m
+[32m+[m[32m        top: pos.top + pos.height[m
+[32m+[m[32m      , left: pos.left[m
+[32m+[m[32m      })[m
+[32m+[m
+[32m+[m[32m      this.$menu.show()[m
+[32m+[m[32m      this.shown = true[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , hide: function () {[m
+[32m+[m[32m      this.$menu.hide()[m
+[32m+[m[32m      this.shown = false[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , lookup: function (event) {[m
+[32m+[m[32m      var items[m
+[32m+[m
+[32m+[m[32m      this.query = this.$element.val()[m
+[32m+[m
+[32m+[m[32m      if (!this.query || this.query.length < this.options.minLength) {[m
+[32m+[m[32m        return this.shown ? this.hide() : this[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source[m
+[32m+[m
+[32m+[m[32m      return items ? this.process(items) : this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , process: function (items) {[m
+[32m+[m[32m      var that = this[m
+[32m+[m
+[32m+[m[32m      items = $.grep(items, function (item) {[m
+[32m+[m[32m        return that.matcher(item)[m
+[32m+[m[32m      })[m
+[32m+[m
+[32m+[m[32m      items = this.sorter(items)[m
+[32m+[m
+[32m+[m[32m      if (!items.length) {[m
+[32m+[m[32m        return this.shown ? this.hide() : this[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      return this.render(items.slice(0, this.options.items)).show()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , matcher: function (item) {[m
+[32m+[m[32m      return ~item.toLowerCase().indexOf(this.query.toLowerCase())[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , sorter: function (items) {[m
+[32m+[m[32m      var beginswith = [][m
+[32m+[m[32m        , caseSensitive = [][m
+[32m+[m[32m        , caseInsensitive = [][m
+[32m+[m[32m        , item[m
+[32m+[m
+[32m+[m[32m      while (item = items.shift()) {[m
+[32m+[m[32m        if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)[m
+[32m+[m[32m        else if (~item.indexOf(this.query)) caseSensitive.push(item)[m
+[32m+[m[32m        else caseInsensitive.push(item)[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      return beginswith.concat(caseSensitive, caseInsensitive)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , highlighter: function (item) {[m
+[32m+[m[32m      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')[m
+[32m+[m[32m      return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {[m
+[32m+[m[32m        return '<strong>' + match + '</strong>'[m
+[32m+[m[32m      })[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , render: function (items) {[m
+[32m+[m[32m      var that = this[m
+[32m+[m
+[32m+[m[32m      items = $(items).map(function (i, item) {[m
+[32m+[m[32m        i = $(that.options.item).attr('data-value', item)[m
+[32m+[m[32m        i.find('a').html(that.highlighter(item))[m
+[32m+[m[32m        return i[0][m
+[32m+[m[32m      })[m
+[32m+[m
+[32m+[m[32m      items.first().addClass('active')[m
+[32m+[m[32m      this.$menu.html(items)[m
+[32m+[m[32m      return this[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , next: function (event) {[m
+[32m+[m[32m      var active = this.$menu.find('.active').removeClass('active')[m
+[32m+[m[32m        , next = active.next()[m
+[32m+[m
+[32m+[m[32m      if (!next.length) {[m
+[32m+[m[32m        next = $(this.$menu.find('li')[0])[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      next.addClass('active')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , prev: function (event) {[m
+[32m+[m[32m      var active = this.$menu.find('.active').removeClass('active')[m
+[32m+[m[32m        , prev = active.prev()[m
+[32m+[m
+[32m+[m[32m      if (!prev.length) {[m
+[32m+[m[32m        prev = this.$menu.find('li').last()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      prev.addClass('active')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , listen: function () {[m
+[32m+[m[32m      this.$element[m
+[32m+[m[32m        .on('blur',     $.proxy(this.blur, this))[m
+[32m+[m[32m        .on('keypress', $.proxy(this.keypress, this))[m
+[32m+[m[32m        .on('keyup',    $.proxy(this.keyup, this))[m
+[32m+[m
+[32m+[m[32m      if ($.browser.chrome || $.browser.webkit || $.browser.msie) {[m
+[32m+[m[32m        this.$element.on('keydown', $.proxy(this.keydown, this))[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      this.$menu[m
+[32m+[m[32m        .on('click', $.proxy(this.click, this))[m
+[32m+[m[32m        .on('mouseenter', 'li', $.proxy(this.mouseenter, this))[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , move: function (e) {[m
+[32m+[m[32m      if (!this.shown) return[m
+[32m+[m
+[32m+[m[32m      switch(e.keyCode) {[m
+[32m+[m[32m        case 9: // tab[m
+[32m+[m[32m        case 13: // enter[m
+[32m+[m[32m        case 27: // escape[m
+[32m+[m[32m          e.preventDefault()[m
+[32m+[m[32m          break[m
+[32m+[m
+[32m+[m[32m        case 38: // up arrow[m
+[32m+[m[32m          e.preventDefault()[m
+[32m+[m[32m          this.prev()[m
+[32m+[m[32m          break[m
+[32m+[m
+[32m+[m[32m        case 40: // down arrow[m
+[32m+[m[32m          e.preventDefault()[m
+[32m+[m[32m          this.next()[m
+[32m+[m[32m          break[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      e.stopPropagation()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , keydown: function (e) {[m
+[32m+[m[32m      this.suppressKeyPressRepeat = !~$.inArray(e.keyCode, [40,38,9,13,27])[m
+[32m+[m[32m      this.move(e)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , keypress: function (e) {[m
+[32m+[m[32m      if (this.suppressKeyPressRepeat) return[m
+[32m+[m[32m      this.move(e)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , keyup: function (e) {[m
+[32m+[m[32m      switch(e.keyCode) {[m
+[32m+[m[32m        case 40: // down arrow[m
+[32m+[m[32m        case 38: // up arrow[m
+[32m+[m[32m          break[m
+[32m+[m
+[32m+[m[32m        case 9: // tab[m
+[32m+[m[32m        case 13: // enter[m
+[32m+[m[32m          if (!this.shown) return[m
+[32m+[m[32m          this.select()[m
+[32m+[m[32m          break[m
+[32m+[m
+[32m+[m[32m        case 27: // escape[m
+[32m+[m[32m          if (!this.shown) return[m
+[32m+[m[32m          this.hide()[m
+[32m+[m[32m          break[m
+[32m+[m
+[32m+[m[32m        default:[m
+[32m+[m[32m          this.lookup()[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      e.stopPropagation()[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  , blur: function (e) {[m
+[32m+[m[32m      var that = this[m
+[32m+[m[32m      setTimeout(function () { that.hide() }, 150)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , click: function (e) {[m
+[32m+[m[32m      e.stopPropagation()[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m[32m      this.select()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  , mouseenter: function (e) {[m
+[32m+[m[32m      this.$menu.find('.active').removeClass('active')[m
+[32m+[m[32m      $(e.currentTarget).addClass('active')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m  /* TYPEAHEAD PLUGIN DEFINITION[m
+[32m+[m[32m   * =========================== */[m
+[32m+[m
+[32m+[m[32m  $.fn.typeahead = function (option) {[m
+[32m+[m[32m    return this.each(function () {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m        , data = $this.data('typeahead')[m
+[32m+[m[32m        , options = typeof option == 'object' && option[m
+[32m+[m[32m      if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))[m
+[32m+[m[32m      if (typeof option == 'string') data[option]()[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.typeahead.defaults = {[m
+[32m+[m[32m    source: [][m
+[32m+[m[32m  , items: 8[m
+[32m+[m[32m  , menu: '<ul class="typeahead dropdown-menu"></ul>'[m
+[32m+[m[32m  , item: '<li><a href="#"></a></li>'[m
+[32m+[m[32m  , minLength: 1[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  $.fn.typeahead.Constructor = Typeahead[m
+[32m+[m
+[32m+[m
+[32m+[m[32m /*   TYPEAHEAD DATA-API[m
+[32m+[m[32m  * ================== */[m
+[32m+[m
+[32m+[m[32m  $(function () {[m
+[32m+[m[32m    $('body').on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {[m
+[32m+[m[32m      var $this = $(this)[m
+[32m+[m[32m      if ($this.data('typeahead')) return[m
+[32m+[m[32m      e.preventDefault()[m
+[32m+[m[32m      $this.typeahead($this.data())[m
+[32m+[m[32m    })[m
+[32m+[m[32m  })[m
+[32m+[m
+[32m+[m[32m}(window.jQuery);[m
+[1mdiff --git a/main.css b/main.css[m
+[1mindex e4d4090..2cb7bb6 100644[m
+[1m--- a/main.css[m
+[1m+++ b/main.css[m
+[36m@@ -6,7 +6,7 @@[m
+ .searchholder {[m
+ 	width: 100%;[m
+ 	padding: 4%;[m
+[31m-	text-align: center;[m
+[32m+[m	[32mtext-align: left;[m
+ }[m
+ #searchbutton {[m
+ 	background-image: url("icons/search-icon_32x32px.png");[m
+[1mdiff --git a/mycollections.php b/mycollections.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..70aa927[m
+[1m--- /dev/null[m
+[1m+++ b/mycollections.php[m
+[36m@@ -0,0 +1,50 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32m?>[m
+[32m+[m	[32m<script type="text/javascript" src="jquery_ptk/js/jquery.js"></script>[m
+[32m+[m	[32m<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>[m
+[32m+[m	[32m<script type="text/javascript">[m
+[32m+[m[32mjQuery(document).ready(function($){[m
+[32m+[m	[32m$('#collectionloader').load("collections.php?item=n");[m
+[32m+[m	[32m$("#li_n a").click(function(e){[m
+[32m+[m		[32me.preventDefault();[m
+[32m+[m		[32m$('#collectionloader').load("collections.php?item=n");[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32m$("#li_sch a").click(function(e){[m
+[32m+[m		[32me.preventDefault();[m
+[32m+[m		[32m$("#collectionloader").load("collections.php?item=sch");[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32m$("#li_atm a").click(function(e){[m
+[32m+[m		[32m$("#collectionloader").load("collections.php?item=atm");[m
+[32m+[m	[32m});[m[41m	[m
+[32m+[m
+[32m+[m	[32m$("#li_pass a").click(function(e){[m
+[32m+[m		[32me.preventDefault();[m
+[32m+[m		[32m$("#collectionloader").load("collections.php?item=pass");[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m
+[32m+[m[41m	[m
+[32m+[m
+[32m+[m[32m});[m
+[32m+[m	[32m</script>[m
+[32m+[m	[32m<style type="text/css">[m
+[32m+[m		[32m#collectionloader{[m
+[32m+[m			[32mwidth:90%;[m
+[32m+[m			[32mtext-align: center;[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m	[32m</style>[m
+[32m+[m[32m<div class="tabbable"> <!-- Only required for left/right tabs -->[m
+[32m+[m[32m  <ul class="nav nav-tabs">[m
+[32m+[m[32m    <li class="active" id="li_n"><a href="#tab1" data-toggle="tab">National IDs</a></li>[m
+[32m+[m[32m    <li id="li_sch"><a href="#tab2" data-toggle="tab">School IDs</a></li>[m
+[32m+[m[32m    <li id="li_atm"><a href="#tab3" data-toggle="tab">Atm Cards</a></li>[m
+[32m+[m[32m    <li id="li_pass"><a href="#tab4" data-toggle="tab">Passports</a></li>[m
+[32m+[m[32m  </ul>[m
+[32m+[m[32m  <div class="tab-content" id="collectionloader">[m
+[32m+[m[41m  	  [m
+[32m+[m[32m  </div>[m
+[32m+[m[32m</div>[m
+[32m+[m
+[1mdiff --git a/personalinfo.php b/personalinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..87ade45[m
+[1m--- /dev/null[m
+[1m+++ b/personalinfo.php[m
+[36m@@ -0,0 +1,153 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32m?>[m
+[32m+[m[32m<link rel="stylesheet" type="text/css" href="bootstrap.css"/>[m
+[32m+[m[32m<script type="text/javascript" src="jquery_ptk/jquery.js"></script>[m
+[32m+[m[32m<script>[m
+[32m+[m	[32m$(document).ready(function() {[m
+[32m+[m		[32m$('#editpersonalinfo').click(function() {[m
+[32m+[m			[32m$("#editform").removeClass("hidden").show().scrollTop();[m
+[32m+[m		[32m});[m
+[32m+[m
+[32m+[m		[32m$("tr").attr("height", "70px");[m
+[32m+[m		[32m$("td").css("text-align", "left");[m
+[32m+[m	[32m});[m
+[32m+[m	[32m$("#savechanges").click(function() {[m
+[32m+[m
+[32m+[m		[32mvar names = $("#names").val();[m
+[32m+[m		[32mvar location = $("#location").val();[m
+[32m+[m		[32mvar year=$("#year").is(":selected");[m
+[32m+[m		[32mvar month=$("#year").is(":selected");[m
+[32m+[m		[32mvar day=$("#year").is(":selected");[m
+[32m+[m[41m		[m
+[32m+[m[41m		[m
+[32m+[m		[32mvar yob = day+"/"+month+"/"+year;[m
+[32m+[m		[32mvar gender = $("#gender").val();[m
+[32m+[m
+[32m+[m		[32mif(names == '' || location == '' || age == '' || gender == '') {[m
+[32m+[m			[32m$("#error").addClass("error").text("no fields should be left blank");[m
+[32m+[m		[32m} else {[m
+[32m+[m			[32m$("#editform").submit();[m
+[32m+[m		[32m}[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m[32m</script>[m
+[32m+[m[32m<div class="edit_link" style="margin-top:0%; float:right;width:95%;margin-right:1%;">[m
+[32m+[m	[32m<b><h3><u style="float: left">Personal information</u></h3></b>[m
+[32m+[m[32m</div>[m
+[32m+[m[32m<p/>[m
+[32m+[m[32m<?php[m
+[32m+[m[32minclude 'dbconn.inc.php';[m
+[32m+[m[32m//include "ptk_functions.php";[m
+[32m+[m[32mrequire_once 'api/User.php';[m
+[32m+[m[32m$u = new User();[m
+[32m+[m[32m$user = $_SESSION['user_allow'];[m
+[32m+[m[32m$userid = $u -> get_user_id($user);[m
+[32m+[m
+[32m+[m[32m$query = "SELECT * FROM users where user_id='" . $userid . "'";[m
+[32m+[m
+[32m+[m[32m$result = mysql_query($query);[m
+[32m+[m
+[32m+[m[32m$content = '';[m
+[32m+[m[32m$age = $u -> get_user_age($userid);[m
+[32m+[m[32mecho "<div class='info_static'><table width='500' id='infotable' align='center'>";[m
+[32m+[m[32mwhile ($row = mysql_fetch_array($result)) {[m
+[32m+[m	[32m$names = $row['names'];[m
+[32m+[m	[32m$location = $row['location'];[m
+[32m+[m	[32m$gender = $row['gender'];[m
+[32m+[m	[32m$content .= <<<EOD[m
+[32m+[m[32m<tr height="50">[m
+[32m+[m[32m<td><b>Names<b/></td>[m
+[32m+[m[32m<td>$names</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr height="50">[m
+[32m+[m[32m<td><b>Location:</b></td>[m
+[32m+[m[32m<td>$location</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr height="50">[m
+[32m+[m[32m<td><b>Age</b></td>[m
+[32m+[m[32m<td>$age</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m[32m<tr height="50">[m
+[32m+[m[32m<td><b>Gender</b></td>[m
+[32m+[m[32m<td>$gender</td>[m
+[32m+[m[32m</tr>[m
+[32m+[m
+[32m+[m[32mEOD;[m
+[32m+[m[32m}[m
+[32m+[m[32mecho $content;[m
+[32m+[m
+[32m+[m[32mecho "<table/></div>";[m
+[32m+[m[32m?>[m
+[32m+[m
+[32m+[m[32m<div id="updatesucess" class="alert-success"></div>[m
+[32m+[m[32m<div id="error" class="alert-error"></div>[m
+[32m+[m[32m<?php[m
+[32m+[m
+[32m+[m[32m$userid = $u -> get_user_id($user);[m
+[32m+[m[32m$displaynames = $u -> get_user_names($userid);[m
+[32m+[m[32m$displaylocation = $u -> get_user_location($userid);[m
+[32m+[m[32m$displayage = $u -> get_yob($userid);[m
+[32m+[m[32m$displaygender = $u -> get_user_gender($userid);[m
+[32m+[m[32m?>[m
+[32m+[m[32m<ul class="nav nav-list">[m
+[32m+[m	[32m<li class="divider"></li>[m
+[32m+[m[32m</ul>[m
+[32m+[m[32m<div class="hero">[m
+[32m+[m	[32m<h4>Edit Personal Information</h4>[m
+[32m+[m[32m</div>[m
+[32m+[m[32m<form method="post" action="updatepersonalinfo.php" id="editform" class="hidden">[m
+[32m+[m	[32m<div id="editformdiv">[m
+[32m+[m		[32m<table align="center">[m
+[32m+[m			[32m<tr>[m
+[32m+[m				[32m<td>Names:</td>[m
+[32m+[m				[32m<td>[m
+[32m+[m				[32m<input type="text" name="names" id="names" value="<?php echo $displaynames;?>"/>[m
+[32m+[m				[32m</td>[m
+[32m+[m			[32m</tr>[m
+[32m+[m			[32m<tr>[m
+[32m+[m				[32m<td>Location:</td>[m
+[32m+[m				[32m<td>[m
+[32m+[m				[32m<input type="text" name="location" id="location" value="<?php echo $displaylocation ?>"/>[m
+[32m+[m				[32m</td>[m
+[32m+[m			[32m</tr>[m
+[32m+[m			[32m<tr>[m
+[32m+[m				[32m<td class="fieldtitle">Year of birth:</td>[m
+[32m+[m				[32m<td>[m
+[32m+[m				[32m<select id="day" name="day" size="1" style="width:50px">[m
+[32m+[m					[32m<?php[m
+[32m+[m					[32mfor ($i = 1; $i <= 31; $i++) {[m
+[32m+[m						[32mecho "<option>" . $i . "</option>";[m
+[32m+[m					[32m}[m
+[32m+[m					[32m?>[m
+[32m+[m				[32m</select> &nbsp;&nbsp;[m
+[32m+[m				[32m<select id="month" name="month" size="1" style="width:70px">[m
+[32m+[m					[32m<?php[m
+[32m+[m					[32m$months = array("Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");[m
+[32m+[m					[32mfor ($i = 0; $i < count($months); $i++) {[m
+[32m+[m						[32mecho "<option>" . $months[$i] . "</option>";[m
+[32m+[m					[32m}[m
+[32m+[m					[32m?>[m
+[32m+[m				[32m</select> &nbsp;&nbsp;[m
+[32m+[m				[32m<select id="year" name="year" size="1" style="width:70px">[m
+[32m+[m					[32m<?php[m
+[32m+[m					[32mfor ($i = 1970; $i <= date("Y", time()) - 18; $i++) {[m
+[32m+[m						[32mecho "<option>" . $i . "</option>";[m
+[32m+[m					[32m}[m
+[32m+[m					[32m?>[m
+[32m+[m				[32m</select></td>[m
+[32m+[m			[32m</tr>[m
+[32m+[m			[32m<tr>[m
+[32m+[m				[32m<td>Gender:</td>[m
+[32m+[m				[32m<td> choosen gender was:&nbsp;<b><?php $gender[m
+[32m+[m				[32m?></b>[m
+[32m+[m				[32m<p/>[m
+[32m+[m				[32m<select name="gender" id="gender">[m
+[32m+[m					[32m<option>male </option>[m
+[32m+[m					[32m<option>female</option>[m
+[32m+[m				[32m</select></td>[m
+[32m+[m			[32m</tr>[m
+[32m+[m		[32m</table>[m
+[32m+[m		[32m<input type="submit" value="Save changes" class="btn btn-success btn-large" id="savechanges"/>[m
+[32m+[m	[32m</div>[m
+[32m+[m[32m</form>[m
+[1mdiff --git a/suggest.css b/suggest.css[m
+[1mindex 34c5768..f57b0dd 100644[m
+[1m--- a/suggest.css[m
+[1m+++ b/suggest.css[m
+[36m@@ -2,8 +2,8 @@[m [minput[type="text"]{[m
+ 	margin-bottom:0;[m
+ }[m
+ #s{[m
+[31m-	width:33%;[m
+[31m-	margin-left:12%; [m
+[32m+[m	[32mwidth:39.5%;[m
+[32m+[m	[32mmargin-left:9%;[m[41m [m
+ 	z-index:99;[m
+ 	position:absolute;[m
+ 	background-color:#FFFFFF;[m
+[1mdiff --git a/template.css b/template.css[m
+[1mindex 733fd9d..82c0a5a 100644[m
+[1m--- a/template.css[m
+[1m+++ b/template.css[m
+[36m@@ -75,7 +75,7 @@[m [mbody {[m
+ }[m
+ .search {[m
+ 	height: 38px;[m
+[31m-	width: 50%;[m
+[32m+[m	[32mwidth: 60%;[m
+ 	font-size: 1.2em;[m
+ 	padding: 0 0 0 0;[m
+ }[m
+[1mdiff --git a/updateinfo.php b/updateinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f8033fc[m
+[1m--- /dev/null[m
+[1m+++ b/updateinfo.php[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32minclude 'dbconn.inc.php';[m
+[32m+[m[32minclude 'ptk_functions.php';[m
+[32m+[m
+[32m+[m[32m$username=htmlentities(htmlspecialchars(mysql_real_escape_string(addslashes($_POST['prefusername']))));[m
+[32m+[m[32m$pass=htmlentities(htmlspecialchars(mysql_real_escape_string(addslashes($_POST['pass']))));[m
+[32m+[m
+[32m+[m[32m$user=$_SESSION['user_allow'];[m
+[32m+[m[32m$u=new User();[m
+[32m+[m[32m$uid=$u->get_user_id($user);[m
+[32m+[m
+[32m+[m[32m$query="UPDATE login SET username='".$username."',password='".md5($pass)."' WHERE user_id='".$uid."'";[m
+[32m+[m
+[32m+[m[32m$result=mysql_query($query);[m
+[32m+[m
+[32m+[m[32m$_SESSION['user_allow']=$username;[m
+[32m+[m
+[32m+[m[32mif($result)[m
+[32m+[m[32m{[m
+[32m+[m	[32mheader("Location: account.php?flag=update_sucess");[m
+[32m+[m[32m}[m
+[32m+[m[32melse{[m
+[32m+[m	[32mheader("Location: account.php?flag=updatefail");[m
+[32m+[m[32m}[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/updatepersonalinfo.php b/updatepersonalinfo.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..dda94cb[m
+[1m--- /dev/null[m
+[1m+++ b/updatepersonalinfo.php[m
+[36m@@ -0,0 +1,27 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m[32minclude 'dbconn.inc.php';[m
+[32m+[m[32minclude 'api/User.php';[m
+[32m+[m[32m$names=$_POST['names'];[m
+[32m+[m
+[32m+[m[32m$day=$_POST['day'];[m
+[32m+[m[32m$month=$_POST['month'];[m
+[32m+[m[32m$year=$_POST['year'];[m
+[32m+[m[32m$age=$day."/".$month."/".$year;[m
+[32m+[m[32m$location=$_POST['location'];[m
+[32m+[m[32m$gender=$_POST['gender'];[m
+[32m+[m
+[32m+[m[32m$user=$_SESSION['user_allow'];[m
+[32m+[m[32m$u=new User();[m
+[32m+[m[32m$uid=$u->get_user_id($user);[m
+[32m+[m[32m$query="UPDATE users SET names='".$names."',yob='".$age."',location='".$location."',gender='".$gender."' WHERE user_id='".$uid."'  ";[m
+[32m+[m[32m$result=mysql_query($query);[m
+[32m+[m[32mif($result)[m
+[32m+[m[32m{[m
+[32m+[m	[32mheader("Location: account.php?flag=update_sucess");[m
+[32m+[m[32m}[m
+[32m+[m[32melse{[m
+[32m+[m	[32mheader("Location: account.php?flag=updatefail");[m
+[32m+[m[32m}[m
+[32m+[m[32mmysql_close();[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m

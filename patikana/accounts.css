@@ -1,0 +1,28 @@
+#wrap{
+	width:65%;
+	margin:0 auto;
+}
+
+.accountoptions{
+	color:#FF0000;
+	margin-right:5px;
+}
+.accountoptions:hover{
+	text-decoration:underline;
+
+}
+#user_alert{
+	font-size: smaller;
+}
+
+.tabs-left{
+	width:20%;
+	float: left;
+}
+
+#content-loader{
+	width:79%;
+	float:right;
+	border-left:#ccc solid thin;
+	border-right:#ccc solid thin
+}

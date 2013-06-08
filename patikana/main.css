@@ -1,0 +1,66 @@
+#tagline {
+	padding-left: 10%;
+	font-weight: bold;
+	font-size: 0.4em;
+}
+.searchholder {
+	width: 100%;
+	padding: 4%;
+	text-align: left;
+}
+#searchbutton {
+	background-image: url("icons/search-icon_32x32px.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: #00b800;
+	width:100px;
+	height:40px;
+}
+#mainpanel {
+	display: inline-block;
+}
+.livestream_tile {
+	background: #FFFFFF !important;
+	margin-top: 2%;
+	font-weight: 300;
+	font-family: "Trebuchet MS";
+	border-radius: 4px;
+	clear: right;
+	padding: 1%;
+}
+.resultholder {
+	background: #ffffff;
+	overflow: hidden;
+	border-radius: 4px;
+	padding: .5%;
+}
+.resultholder > table {
+	border: none;
+}
+.clock {
+	width: 100%;
+	float: right;
+	text-align: right
+}
+#leftpanel {
+	width: 60%;
+	float: left;
+	display: inline;
+	overflow: hidden;
+	margin-left: 1%;
+}
+#sidepane {
+	float: right;
+	width: 35%;
+	overflow: hidden;
+	margin-right: 2%;
+	margin-top: 4%;
+}
+div#sidepane .nav > li a {
+	text-decoration: none;
+	font-size: 1.5em;
+	text-align: center;
+}
+div#sidepane .nav > li a:hover {
+	text-decoration: underline;
+}

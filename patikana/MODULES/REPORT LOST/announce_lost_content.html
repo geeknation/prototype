@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#someother').hide();
+				
+				$("#announceitemtype").change(function() {
+
+					if($("#other").is(":selected")) {
+						//Show some other
+						$('#someother').show();
+						$('#identifier').text("Name for this other");
+						$('#serial').text("Item's Number");
+					}
+
+					if($("#school_id").is(":selected")) {
+						//Show some other
+						$('#someother').show();
+						$('#identifier').text("School/Collage/Campus");
+						$('#serial').text("Registration Number");
+
+					}
+					if($("#atm_card").is(":selected")) {
+						//Show some other
+						$('#someother').show();
+						$('#identifier').text("Bank");
+						$('#serial').text("A/C Number");
+
+					}
+					if($("#driving_license").is(":selected")) {
+						$('#someother').hide();
+						$('#serial').text("Driving Licence Number");
+					}
+
+					if($("#passport").is(":selected")) {
+
+						//Show some other
+						$('#someother').show();
+						$('#identifier').text("Country");
+						$('#serial').text("Passport Number");
+
+						//Hide the other row
+
+					}
+					if($("#national_id").is(":selected")) {
+						//Hide the other row
+						$('#someother').hide();
+						$('#serial').text("ID Number");
+					}
+
+				});
+			});
+
+		</script>
+		<style type="text/css">
+			#report_form {
+				text-align: center;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="report_form">
+			<div id="error"></div>
+			<form name="form" id="announceform">
+				<table align="center" width="100%">
+					<tr>
+						<td colspan="3"><span class="title"><h5>Lost Item Details:</h5></span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td><td>Item</td><td>
+						<select id="announceitemtype" name="announceitemtype">
+							<option id="neutral">Click here to select:</option>
+							<option id="national_id">National ID</option>
+							<option id="school_id">School ID</option>
+							<option id="atm_card">ATM card</option>
+							<option id="driving_license">Driving licence</option>
+							<option id="passport">Passport</option>
+							<option id="other">Some other</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td><td>Your Names</td><td>
+						<input type="text" name="names" id="fullnames" size="25%"/>
+						</td>
+					</tr>
+					<tr id="someother">
+						<td>&nbsp;</td><td id="identifier"></td><td>
+						<input type="text" name="other" id="extrainfo" size="25%"/>
+						</td>
+					</tr>
+					<tr>
+						<td></td><td id="serial">Item\'s Number</td><td>
+						<input type="text" name="serialnumber" id="serialnumber" size="25%"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<hr />
+						<span class="title"><h5>How we can reach you</h5></span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td><td>Phone No</td><td>
+						<input type="text" name="phonenumber" id="phoneno" size="25%"/>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td><td>Email</td><td>
+						<input type="text" name="email" id="emailadd" size="25%"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="conf"></div>
+	</body>
+</html>

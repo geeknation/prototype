@@ -1,0 +1,71 @@
+#wrapped{
+	width: 1000px;
+	background: #FFFFFF;
+	margin: 0 auto;
+	height: auto;
+	text-align: left;
+	overflow: hidden;
+	
+}
+
+.reg_heading {
+	margin: 0 auto;
+	text-align: center;
+	width: 400px;
+	font-weight: 600;
+	font-size: 17px;
+	overflow: hidden;
+	background-color: #6f9;
+	border: solid thin #00FF00;
+	margin-bottom: 10px;
+	margin-top:15px;
+}
+div#register_form_div {
+	width: 500px;
+	background-color: #39e039;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0.5)";
+	filter: alpha(opacity=0.5);
+	-moz-opacity:0.5;
+	text-align: center;
+	margin: 0 auto;
+	overflow: hidden;
+	opacity: 0.5px;
+	margin-bottom: 20px;
+}
+table#register_table {
+	margin: 0 auto;
+	width: 80%;
+}
+#register_table tr {
+	height: 40px;
+}
+.fieldtitle {
+	font-weight: bold;
+	text-transform: capitalize;
+}
+.error {
+	height: 30px;
+	background-color: #FCC;
+	width: 400px;
+	margin: 0 auto;
+	overflow: hidden;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	border: solid thin #F6F;
+	margin-bottom: 15px;
+}
+.bordered {
+	border: #F00 solid thin;
+}
+
+.alerterror{
+	margin-top:10px;
+}
+#content{
+	margin:0 auto;
+	overflow: hidden;
+
+	text-align: center;
+	width: auto;	margin:1%;
+}input[type="text"],input[type="select"],input[type="password"],input[type="location"]{	width:100%;}#countrycode{	width:45px;}#phoneno_id{	width:450px;}

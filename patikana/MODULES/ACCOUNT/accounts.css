@@ -1,0 +1,16 @@
+#wrap{
+	width:65%;
+	margin:0 auto;
+}
+
+.accountoptions{
+	color:#FF0000;
+	margin-right:5px;
+}
+.accountoptions:hover{
+	text-decoration:underline;
+
+}
+#user_alert{
+	font-size: smaller;
+}

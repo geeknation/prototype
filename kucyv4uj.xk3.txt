@@ -1,0 +1,137 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#	new file:   patikana/LOGIN/login.php
+#	new file:   patikana/LOGIN/login_content.html
+#	new file:   patikana/LOGIN/logout.php
+#	new file:   patikana/MODULES/GLOBALS/ptk_functions.php
+#	new file:   patikana/MODULES/LIVESTREAM/livestream.php
+#	new file:   patikana/MODULES/LIVESTREAM/livestream_init.php
+#	new file:   patikana/MODULES/LIVESTREAM/loadonscroll.php
+#	new file:   patikana/MODULES/REPORT FOUND/reportfound.php
+#	new file:   patikana/MODULES/REPORT FOUND/reportfoundsave.php
+#	new file:   patikana/MODULES/REPORT LOST/announce_lost_content.html
+#	new file:   patikana/MODULES/REPORT LOST/announcelost.php
+#	new file:   patikana/MODULES/SEARCH/founddocument.php
+#	new file:   patikana/MODULES/SEARCH/itsmine.js
+#	new file:   patikana/MODULES/SEARCH/itsmine.php
+#	new file:   patikana/MODULES/SEARCH/search_ids.js
+#	new file:   patikana/MODULES/SEARCH/search_locate.php
+#	new file:   patikana/MODULES/SEARCH/verifyowner.php
+#	new file:   patikana/MODULES/SUGGEST/suggest.css
+#	new file:   patikana/MODULES/SUGGEST/suggest.js
+#	new file:   patikana/MODULES/SUGGEST/suggest.php
+#	new file:   patikana/announce_lost_content.html
+#	new file:   patikana/announcelost.php
+#	new file:   patikana/api/Documents.php
+#	new file:   patikana/api/PatikanaAdmin.php
+#	new file:   patikana/api/Report.php
+#	new file:   patikana/api/Search.php
+#	new file:   patikana/api/Timekeeper.php
+#	new file:   patikana/api/User.php
+#	new file:   patikana/api/dbconn.inc.php
+#	new file:   patikana/bootstrap.css
+#	new file:   patikana/dbconn.inc.php
+#	new file:   patikana/dialogdivs.html
+#	new file:   patikana/flat-ui.css
+#	new file:   patikana/footer.php
+#	new file:   patikana/founddocument.php
+#	new file:   patikana/header.php
+#	new file:   patikana/icons/home-icon_32x32px.png
+#	new file:   patikana/icons/search-icon_32x32px.png
+#	new file:   patikana/icons/settings-02-icon_32x32px.png
+#	new file:   patikana/images/boardLogo.png
+#	new file:   patikana/images/boardLogo_smaller.png
+#	new file:   patikana/images/bullet_user.png
+#	new file:   patikana/images/bullet_user_t.png
+#	new file:   patikana/images/category.png
+#	new file:   patikana/images/close_icon.png
+#	new file:   patikana/images/cog.png
+#	new file:   patikana/images/control_power_blue.png
+#	new file:   patikana/images/favicon.ico
+#	new file:   patikana/images/favicon.png
+#	new file:   patikana/images/favicon_32_32.jpg
+#	new file:   patikana/images/found.png
+#	new file:   patikana/images/glyphicons_019_cogwheel.png
+#	new file:   patikana/images/glyphicons_025_binoculars.png
+#	new file:   patikana/images/home.png
+#	new file:   patikana/images/how.png
+#	new file:   patikana/images/howitworks.jpg
+#	new file:   patikana/images/idcard.png
+#	new file:   patikana/images/idcard2.jpg
+#	new file:   patikana/images/index.php
+#	new file:   patikana/images/livepage.js
+#	new file:   patikana/images/loader.gif
+#	new file:   patikana/images/logo3.jpg
+#	new file:   patikana/images/lost.png
+#	new file:   patikana/images/maginf.png
+#	new file:   patikana/images/mainlogo.jpg
+#	new file:   patikana/images/mainlogo.png
+#	new file:   patikana/images/nid.jpg
+#	new file:   patikana/images/nid.png
+#	new file:   patikana/images/noimage.gif
+#	new file:   patikana/images/notice.png
+#	new file:   patikana/images/notice_smaller.png
+#	new file:   patikana/images/other.png
+#	new file:   patikana/images/pass.png
+#	new file:   patikana/images/sid.jpg
+#	new file:   patikana/images/sid.png
+#	new file:   patikana/images/signup-facebook.png
+#	new file:   patikana/images/training.JPG
+#	new file:   patikana/images/users.png
+#	new file:   patikana/index.php
+#	new file:   patikana/itsmine.js
+#	new file:   patikana/itsmine.php
+#	new file:   patikana/jquery.js
+#	new file:   patikana/jquery_ptk/bootstrap-collapse.js
+#	new file:   patikana/jquery_ptk/bootstrap-dropdown.js
+#	new file:   patikana/jquery_ptk/images/ui-bg_flat_0_9a9898_40x100.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_flat_0_aaaaaa_40x100.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_flat_75_ffffff_40x100.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_glass_55_12da07_1x400.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_glass_55_fbf9ee_1x400.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_glass_65_ffffff_1x400.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_glass_75_ffffff_1x400.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_highlight-soft_75_f8f7f7_1x100.png
+#	new file:   patikana/jquery_ptk/images/ui-bg_inset-soft_95_dfdedd_1x100.png
+#	new file:   patikana/jquery_ptk/images/ui-icons_222222_256x240.png
+#	new file:   patikana/jquery_ptk/images/ui-icons_2e83ff_256x240.png
+#	new file:   patikana/jquery_ptk/images/ui-icons_454545_256x240.png
+#	new file:   patikana/jquery_ptk/images/ui-icons_888888_256x240.png
+#	new file:   patikana/jquery_ptk/images/ui-icons_cd0a0a_256x240.png
+#	new file:   patikana/jquery_ptk/images/ui-icons_ffffff_256x240.png
+#	new file:   patikana/jquery_ptk/jquery.css
+#	new file:   patikana/jquery_ptk/jquery.js
+#	new file:   patikana/jquery_ptk/jquery.mobile.js
+#	new file:   patikana/jquery_ptk/jqueryeasing.js
+#	new file:   patikana/jquery_ptk/jqueryui.js
+#	new file:   patikana/livepage.js
+#	new file:   patikana/livestream.php
+#	new file:   patikana/livestream_init.php
+#	new file:   patikana/loadonscroll.php
+#	new file:   patikana/login.php
+#	new file:   patikana/login_content.html
+#	new file:   patikana/logout.php
+#	new file:   patikana/main.css
+#	new file:   patikana/ptk_functions.php
+#	new file:   patikana/search_ids.js
+#	new file:   patikana/search_locate.php
+#	new file:   patikana/suggest.css
+#	new file:   patikana/suggest.js
+#	new file:   patikana/suggest.php
+#	new file:   patikana/template.css
+#	new file:   patikana/verifyowner.php
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	.gitattributes
+#	.gitignore
+
